@@ -16,6 +16,7 @@ class CreateProductsHistoryTable extends Migration
         Schema::create('products_history', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->timestamps();
+            $table->string('url')->unique();
         });
     }
 
