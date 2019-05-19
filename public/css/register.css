@@ -1,0 +1,11 @@
+h11{
+    color:red;
+}
+
+.panel-heading{
+    font-size:150%;
+    text-align: center;
+    background-color: violet;
+    padding: 6pt;
+    color: white;
+}
