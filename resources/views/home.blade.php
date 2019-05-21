@@ -15,6 +15,10 @@
                     @endif
 
                     You are logged in!
+
+                    <div class="form-group">
+                    <a href="{{route('product.create')}}">Publish new product</a>    
+                    </div>
                 </div>
             </div>
         </div>
