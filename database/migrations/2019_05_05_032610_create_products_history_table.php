@@ -16,15 +16,11 @@ class CreateProductsHistoryTable extends Migration
         Schema::create('products_history', function (Blueprint $table) {
             $table->bigIncrements('id');
 
-            $table->bigInteger('user_id');
-            $table->foreign('user_id')
-                ->references('id')->on('users')
-                ->onDelete('cascade');
+            $table->BigInteger('user_id')->unsigned();
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
 
-            $table->bigInteger('product_id');
-            $table->foreign('product_id')
-                ->references('id')->on('products')
-                ->onDelete('cascade');
+            $table->BigInteger('product_id')->unsigned();
+            $table->foreign('product_id')->references('id')->on('products')->onDelete('cascade');
 
             $table->string('status');
 

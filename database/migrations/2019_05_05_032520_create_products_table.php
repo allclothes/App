@@ -14,15 +14,10 @@ class CreateProductsTable extends Migration
     public function up()
     {
         Schema::create('products', function (Blueprint $table) {
-            $table->increments('id');
-
+            $table->bigIncrements('id');
+            $table->BigInteger('user_id')->unsigned();
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
             $table->string('url')->unique();
-            
-            $table->bigInteger('user_id');
-            $table->foreign('user_id')
-                ->references('id')->on('users')
-                ->onDelete('cascade');
-
             $table->string('name');
             $table->bigInteger('amount');
             $table->bigInteger('cost');
@@ -31,6 +26,8 @@ class CreateProductsTable extends Migration
             $table->string('images');
             $table->dateTime('deletedAt')->nullable();                    
             $table->timestamps();
+
+            
         });
         
     }

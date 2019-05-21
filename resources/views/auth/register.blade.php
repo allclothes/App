@@ -54,6 +54,7 @@
 
                         <div class="form-group row">
                             <div class="col-md-6">
+                            <label for="Name" class="text-md-right">{{ __('Nome:') }}</label><br/>
                                 <input id="name" placeholder="Nome" type="text" class="form-control @error('name') is-invalid @enderror" name="name" value="{{ old('name') }}" required autocomplete="name" autofocus>
 
                                 @error('name')
@@ -63,6 +64,7 @@
                                 @enderror
                             </div>
                             <div class="col-md-6">
+                                    <label for="lastname" class="text-md-right">{{ __('Sobrenome:') }}</label><br/>
                                     <input id="lastname" placeholder="Sobrenome" type="text" class="form-control @error('lastname') is-invalid @enderror" name="lastname" value="{{ old('lastname') }}" required autocomplete="lastname">
     
                                     @error('lastname')
@@ -73,9 +75,40 @@
                             </div>
                         </div>
 
+                        <!--Campo de sexo e cpf
+                        <div class="form-group row">
+
+                            <div class="col-md-6">
+                                <label for="cpf" class="text-md-right">{{ __('CPF:') }}</label>
+                                <input id="cpf" name="cpf" placeholder="Apenas números" class="form-control input-md" required="" type="text" maxlength="11" pattern="[0-9]+$">
+                                @error('name')
+                                <span class="invalid-feedback" role="alert">
+                                <strong>{{ $message }}</strong>
+                                </span>
+                                @enderror
+                            </div>
+
+                            <div class="col-md-6">
+                                <label for="sex" class="text-md-right">{{ __('Sexo:') }}</label><br/><br/>
+                                <input name="sex" id="sex" value="feminino" type="radio" required>
+                                Feminino
+                                </label> 
+                                <label class="radio-inline" for="radios-1">
+                                <input name="sex" id="sex" value="masculino" type="radio">
+                                Masculino
+                                </label>
+                            </div>
+                                @error('lastname')
+                                <span class="invalid-feedback" role="alert">
+                                <strong>{{ $message }}</strong>
+                                </span>
+                                @enderror
+                        </div>-->
+                        
+
                         <div class="form-group">
                           
-                            <label for="email" class="text-md-right">{{ __('E-Mail Address') }}</label>
+                            <label for="email" class="text-md-right">{{ __('E-Mail Address:') }}</label>
 
                                 <input id="email" type="email" class="form-control @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" required autocomplete="email">
 
