@@ -1,74 +1,45 @@
-<!DOCTYPE html>
-<head>
-    <meta charset="UTF-8">
-    <title>Login do usuário</title>
-</head>
-<body>
-        <div class="panel panel-primary">
-        <div class="panel-heading">Login do Usuário</div></br>
+<!doctype html>
+<html lang="{{ app()->getLocale() }}">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <link rel="shortcut icon" type="image/x-icon" href="{{asset("img/favicon.ico")}}" />
 
-    <div class="row">
-        <div class="col-md-11">
-        <a href="" class="float-right btn btn-outline-primary" style="border-color: violet; color: purple;">Inscreva-se</a>
-        </div>
-    </div>
+        <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <div class="row">
-            <div class="col-md-12">
-            <h4 style="text-align: center;"> Já sou cliente A'l Clothes</h4>
-            </div>
-    </div></br>
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bs-stepper/dist/css/bs-stepper.min.css">
+        <title>A'L Clothes - @yield('title')</title>
+
+        <!-- Fonts -->
+        <link href="https://fonts.googleapis.com/css?family=Raleway:100,600" rel="stylesheet" type="text/css">
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+        <!-- Styles -->
+
+        <!-- font awesome -->
+        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/solid.css" integrity="sha384-ioUrHig76ITq4aEJ67dHzTvqjsAP/7IzgwE7lgJcg2r7BRNGYSK0LwSmROzYtgzs" crossorigin="anonymous">
+        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/fontawesome.css" integrity="sha384-sri+NftO+0hcisDKgr287Y/1LVnInHJ1l+XC7+FOabmTTIK0HnE2ID+xxvJ21c5J" crossorigin="anonymous">
+ 
+        <link rel="stylesheet" href="{{asset('css/style_auth.css')}}">
+
+        @yield('style')
+    </head>
+    <body style="@yield('bg-color')">
+
+    <div class="page-wrapper">
+
+
+       @yield('navbar')
+   
     
-	<form class="container">  
+        @yield('main_content')
+        
 
-        <div class="row">
-            <div class="col-md-3"></div>
-            <div class="col-md-6">
-         <div class="input-group">
-             <div class="input-group-prepend">
-                    <span class="input-group-text">
-                            <span class="fa fa-user"></span>
-                    </span> 
-            </div>
-            <input name="" class="form-control" placeholder="Email or login" type="email">      
-        </div>
-        </div>
-        </div></br> 
+        @yield('footer')
 
-        <div class="row">
-            <div class="col-md-3"></div>
-            <div class="col-md-6">
-        <div class="input-group">
-                <div class="input-group-prepend">
-                        <span class="input-group-text">
-                            <span class="fa fa-lock"></span>
-                        </span>
-                </div>
-                <input class="form-control" placeholder="******" type="password">                 
-        </div>
-        </div>
-        </div></br>
+        
+        </div>  
 
-        <div class="row">
-            <div class="col-md-3"></div>
-            <div class="col-md-3">
-                <div class="form-group">
-                    <button type="submit" class="btn btn-primary btn-block" style=" background-color: white; border-color: violet; color: purple;">Login</button>
-                </div>
-            </div>
-            <div class="col-md-3 text-right">
-                    <a class="small" href="#" style="color: purple;">Esqueceu a senha?</a>
-            </div>
-            
-</div>                                                                
-</form>
-
-</body>
-
-<link href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
-<script src="https//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-<link rel="stylesheet" href="{{ asset('css/login.css')}}"/>
-<link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
-
+        <script src="https://cdn.jsdelivr.net/npm/bs-stepper/dist/js/bs-stepper.min.js"></script>
+    </body>
 </html>
+

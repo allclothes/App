@@ -11,6 +11,20 @@
 
     <!-- Scripts -->
     <script src="{{ asset('js/app.js') }}" defer></script>
+        
+    <script type="text/javascript">
+        function UpdateMultiple () {
+            var multiCBox = document.getElementById ("multi");
+            var fileInput = document.getElementById ("fileInput");
+
+            fileInput.multiple = multiCBox.checked;
+        }
+    </script>
+    
+    <script
+  src="https://code.jquery.com/jquery-3.4.1.min.js"
+  integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo="
+	crossorigin="anonymous"></script>
 
     <!-- Fonts -->
     <link rel="dns-prefetch" href="//fonts.gstatic.com">

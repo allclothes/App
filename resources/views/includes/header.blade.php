@@ -10,7 +10,7 @@
         </div>
 
         <div class="header-right">
-            <a class="user-tag" data-toggle="tooltip" data-placement="bottom" title="Login or register" href=""><i class="pt-10 fas fa-user"></i></a>
+            <a class="user-tag" data-toggle="tooltip" data-placement="bottom" title="Login or register" href="/menu"><i class="pt-10 fas fa-user"></i></a>
             <a class="card-bag" href="#"><img src="{{ asset('img/icons/bag.png') }}" alt=""><span>2</span></a>
             <a href="#" class="search"><img src="{{ asset('img/icons/search.png') }}" alt=""></a>
         </div>

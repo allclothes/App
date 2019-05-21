@@ -3,9 +3,23 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\Product;
+use Image;
+use Illuminate\Support\Facades\Auth;
+use DB;
 
 class productsController extends Controller
 {
+
+
+
+    private $product;
+
+
+    public function __construct(Product $product){
+        $this->product = $product;
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -13,7 +27,9 @@ class productsController extends Controller
      */
     public function index()
     {
-        //
+        $products = DB::table('products')->where('user_id', auth::user()->id)->paginate(12);
+
+        return view('product.index', ['products' => $products]);
     }
 
     /**
@@ -23,7 +39,10 @@ class productsController extends Controller
      */
     public function create()
     {
-        //
+        if(auth::check())
+            return view('product.create');
+        else
+            return redirect()->back()->with('error', 'Você precisa estar logado para fazer esta ação.');
     }
 
     /**
@@ -34,7 +53,57 @@ class productsController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        
+        if(auth::check() && isset($request) && $request->isMethod('post')){
+            try{
+            // $categories = ['Lava', 'louça', 'banho', ];
+
+            $p = new Product;
+            $p->user_id = Auth::user()->id;
+            $p->name = $request->input('name');
+            $p->amount = $request->input('amount');
+            $p->cost = $request->input('cost');
+            $p->description = $request->input('description');
+
+            // if(in_array($request->input('category'), $categories))
+            $p->category = $request->input('category');
+            // else
+            // return redirect()->back()->withErrors($validator)->withInput('error', 'Catégoria inválida.');
+            
+
+
+            if($request->hasfile('images'))
+            {
+
+        foreach($request->file('images') as $image)
+        {
+            $imgtemp = time();
+            $name= mt_rand(100, 9999) . "-" . $image->getClientOriginalName();
+            $image->move(public_path().'/img/product_images', $name);  
+            $data[] = $name;
+        }
+     }
+
+     
+            $p->image = json_encode($data);
+
+            $url = str_replace(" ","-", $request->input('name'));
+            $url = strtolower($url);
+            $url = $url.'-'.mt_rand(100, 999);
+            $p->url = $url;
+            
+            
+ 
+            
+                $p->save();
+                return redirect('product/'.$url)->with('success', 'Produto adicionado com sucesso!');
+            
+        }catch(\Exception $e){
+               // do task when error
+               echo $e->getMessage();   // insert query
+            }
+
+        }
     }
 
     /**
@@ -45,7 +114,11 @@ class productsController extends Controller
      */
     public function show($url)
     {
-        return view('product.show');
+        $get = DB::table('products')->where('url', $url)->get();
+        if(count($get) > 0)
+        return view('product.show', ['product' => $get]);
+        else
+        return redirect('/');
     }
 
     /**
