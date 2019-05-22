@@ -4,14 +4,25 @@ Route::get('/', function(){
     return view('index');
 });
 
-Route::resource('product', 'productsController');
 
 Route::get('/menu', function(){
     return view('smart_menu');
 });
 
+
+Route::prefix('/control-panel')->group(function () {
+
+    Route::get('/', 'HomeController@index')->name('home');
+    
+
+    Route::resource('store', 'storeController');
+    Route::resource('product', 'productsController');
+
+    
+
+});
+
 Auth::routes();
 
-Route::get('/home', 'HomeController@index')->name('home');
-
-
+Route::get('/{name}', 'storeController@show');
+Route::get('/{store}/{url}', 'productsController@show');

@@ -1,97 +1,57 @@
-@extends('layouts.auth_layout')
-@section('title', 'Login')
-@section('bg-color', 'background-color:#e9eaee;')
-@section('navbar')
-<nav class="navbar">
-    <div class="nav1">
-        <div class="nav1-item-header container">
-            <div class="logo">
-                <a href="/"><img src="{{asset('img/logo.png')}}" alt=""></a>                
-            </div>           
-        </div>
-    </div>
-</nav>
-@endsection
+@extends('layouts.auth')
 
-@section('main_content')
-<div class="allanunc col-md-12">
-    <div class="container-box">
+@section('content')
 
-        @if (Session::has('error'))
-            <div class="alert alert-danger" role="alert">{{ Session::get('error') }}</div>
-        @endif
-
-        <div class="back-page">
-            <div class="back-page">               
-                 <a href="/"><i class="fas fa-home"></i> Home</a> 
-                <i class="fas fa-angle-right"></i>
-                <a href="/menu">Menu</a> 
-                <i class="fas fa-angle-right"></i>
-                 Login</div>
-                 
-        </div>
-        <div class="anunciar-box" align="center">        
-        <header>Fazer Login</header>
-        <small>Tenha acesso aos seus anúncios.</small>       
-        <div class="buttons">
-
-            <form class="form-horizontal" method="POST" action="{{ route('login') }}">
-                @csrf
-
-                <div class="form-group {{ $errors->has('email') ? ' has-error' : '' }}">
-                    <label for="email" class="control-label">E-mail</label>
-                    <div>
-                            <input id="email" type="email" class="form-control @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" required autocomplete="email" autofocus>
-
-                            @error('email')
-                                <span class="invalid-feedback" role="alert">
-                                    <strong>{{ $message }}</strong>
-                                </span>
-                            @enderror
-
+<div class="container register">
+                <div class="row">
+                    <div class="col-md-3 register-left">
+                        <a href="/">
+                        <img src="{{asset('img/logo.png')}}" alt=""/>
+                        </a>
+                        <h3>Bem vindo<br>de volta!</h3>
+                        <p>Não tem conta?<br> Vem comigo, não dura nem 30 segundos :P</p>
+                        <a href="/register">
+                        <input type="submit" name="" value="Registrar"/>
+                        </a><br/>
                     </div>
-                </div>
-                
-                <div class="form-group{{ $errors->has('password') ? ' has-error' : '' }}">
-                  
-                    <label for="password" class="control-label">Senha</label>
-                    <div>
-                         <input id="password" type="password" class="form-control @error('password') is-invalid @enderror" name="password" required autocomplete="current-password">
+                    <div class="col-md-9 register-right">
 
-                                @error('password')
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
-                                @enderror
+                        <div class="tab-content" id="myTabContent">
+                            <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
+                                <h3 class="register-heading" style="margin-right: 20px;">Entrar</h3>
+                            <form method="POST" action="{{route('login')}}">
+                                @csrf
+                                <div class="row register-form col-md-12" align="center" style="display: flex;justify-content: center;">
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <input type="email" name="email" placeholder="Email" class="form-control" >
+                                        </div>
+                                        <div class="form-group">
+                                            <input type="password" class="form-control" placeholder="Senha" name="password">
+                                        </div>
+                                        <div class="col-md-12">
+                                        <a href="#" style="font-size: 0.8em;">Esqueci minha senha</a>
+                                        </div>
+                                        
+                                        
 
-                        @if (Route::has('password.request'))
-                                    <a class="btn btn-link" href="{{ route('password.request') }}">
-                                        <small>{{ __('Esqueceu sua senha?') }}</small>
-                                    </a>
-                                @endif
+                                        <input type="submit" class="btnRegister" value="Login"/>
+                                        <div class="clearfix"></div>
+                                        <a href="/">
+                                        <button type="button" class="btnVoltar" style="margin-top:10px;">Voltar</button>
+                                        </a>
+                                    </form>
 
+                                       
+                                    </div>
+
+                                </div>
+                                        
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
 
-                <div class="form-group">
-                    <button type="submit" class="btn-fazerLogin">
-                    <i class="fas fa-sign-in-alt"></i>
-                    Entrar</button>
-                </div>
-            </form>
-            
-            <div class="spacediv"></div>
-            
-            
-            <div class="no-acc">
-
-                        <span>Não tem conta?</span>
-                        <a href="/register">Criar conta</a> 
             </div>
-        </div>
-    </div>
-</div>
-</div>
 @endsection
- 
-

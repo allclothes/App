@@ -55,11 +55,17 @@ class productsController extends Controller
     {
         
         if(auth::check() && isset($request) && $request->isMethod('post')){
+            $getStoreId = DB::table('store')->where('user_id', auth::user()->id)->limit(1)->value('id');
+
+            if(!isset($getStoreId)){
+                return redirect('/control-panel/store/create')->with('Error', 'Primeiro crie a sua loja virtual!');
+            }
+
             try{
             // $categories = ['Lava', 'louça', 'banho', ];
 
             $p = new Product;
-            $p->user_id = Auth::user()->id;
+            $p->store_id = $getStoreId;
             $p->name = $request->input('name');
             $p->amount = $request->input('amount');
             $p->cost = $request->input('cost');
@@ -85,7 +91,7 @@ class productsController extends Controller
      }
 
      
-            $p->image = json_encode($data);
+            $p->images = json_encode($data);
 
             $url = str_replace(" ","-", $request->input('name'));
             $url = strtolower($url);
@@ -96,7 +102,7 @@ class productsController extends Controller
  
             
                 $p->save();
-                return redirect('product/'.$url)->with('success', 'Produto adicionado com sucesso!');
+                return redirect('/' . auth::user()->storename . '/' . $url)->with('success', 'Produto adicionado com sucesso!');
             
         }catch(\Exception $e){
                // do task when error
@@ -112,13 +118,18 @@ class productsController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($url)
+    public function show($store, $url)
     {
-        $get = DB::table('products')->where('url', $url)->get();
+        $checkStore = DB::table('store')->where('name', $store)->limit(1)->value('id');
+        if(isset($checkStore)){
+        $get = DB::table('products')->where('url', $url)->where('store_id', $checkStore)->get();
         if(count($get) > 0)
         return view('product.show', ['product' => $get]);
         else
-        return redirect('/');
+        return redirect('/')->with('Error', 'Este produto não existe nesta loja.');
+    }else{
+        return redirect('/')->with('Error', 'Esta loja não existe.');
+    }
     }
 
     /**
