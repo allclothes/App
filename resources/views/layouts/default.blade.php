@@ -1,116 +1,310 @@
 <!DOCTYPE html>
-<html lang="zxx">
+<html lang="{{ app()->getLocale() }}">
 <head>
-	<title>A'L Clothes - @yield('title')</title>
-	<meta charset="UTF-8">
-	<meta name="description" content="The Plaza eCommerce Template">
-	<meta name="keywords" content="plaza, eCommerce, creative, html">
-	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<!-- Favicon -->   
-	<link href="{{ asset('img/favicon.ico') }} " rel="shortcut icon"/>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="shortcut icon" type="image/x-icon" href="{{asset("img/favicon.png")}}" />
 
-	<!-- Google Fonts -->
-	<link href="https://fonts.googleapis.com/css?family=Raleway:400,400i,500,500i,600,600i,700,700i" rel="stylesheet">
+    <!-- CSRF Token -->
+    <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    <!-- Stylesheets -->
+    <title>Pay.me @yield('title')</title>
+
+    <!-- Styles -->
+		{{-- <link href="{{ asset('/css/bootstrap.min.css') }}" rel="stylesheet"> --}}
+		<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 	
-    <script
-  src="https://code.jquery.com/jquery-3.4.1.min.js"
-  integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo="
-	crossorigin="anonymous"></script>
+		<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css" integrity="sha384-oS3vJWv+0UjzBfQzYUhtDYW+Pj2yciDJxpsK1OYPAYjqT085Qq/1cq5FLXAZQ7Ay" crossorigin="anonymous">
+    <link href="{{ asset('/css/style.css') }}" rel="stylesheet">
 
+		<script
+		src="https://code.jquery.com/jquery-3.4.1.min.js"
+		integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo="
+		crossorigin="anonymous"></script>
+    <script src="{{ asset('/js/bootstrap.min.js') }}"></script>
+    <script src="{{ asset('/js/bootstrap.bundle.js') }}"></script>
 
-	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-	
-     {{-- <link rel="stylesheet" href="{{asset ('css/bootstrap.min.css') }}"/> --}}
-    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/solid.css" integrity="sha384-QokYePQSOwpBDuhlHOsX0ymF6R/vLk/UQVz3WHa6wygxI5oGTmDTv8wahFOSspdm" crossorigin="anonymous">
-<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/fontawesome.css" integrity="sha384-vd1e11sR28tEK9YANUtpIOdjGW14pS87bUBuOIoBILVWLFnS+MCX9T6MMf0VdPGq" crossorigin="anonymous">
-	<link rel="stylesheet" href="{{ asset('css/owl.carousel.css') }}"/>
-	<link rel="stylesheet" href="{{ asset('css/style.css') }}"/>
-	<link rel="stylesheet" href="{{ asset('css/animate.css') }}"/>
+    <script src="{{ asset('/lightbox/ekko-lightbox.js') }}"></script>
+    <link href="{{ asset('/lightbox/ekko-lightbox.css') }}" rel="stylesheet">
 
 
 
-	
-	<!--[if lt IE 9]>
-	  <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js') }}"></script>
-	  <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js') }}"></script>
-	<![endif]-->
-    <script>
-            $(function () {
-          $('[data-toggle="tooltip"]').tooltip()
-        })
-        </script>
 </head>
-<body>
-
-	@if(Session::has('error') || Session::has('success'))
-		<div aria-live="polite" aria-atomic="true" style="position: relative;">
-				<!-- Position it -->
-				<div style="position: fixed; top: 0;right:0;margin-right:50px;margin-top: 20px;z-index:99999;">
-			
-					<!-- Then put toasts within -->
-					<div class="toast" role="alert" id="toastService" aria-live="assertive" aria-atomic="true" data-autohide="false">
-						<div class="toast-header">
-							<img src="{{asset('img/logo-phone.png')}}" class="rounded mr-2" alt="...">
-							<strong class="mr-auto">{{ session::has('error') ? 'Ops!' : 'Success!' }}</strong>
-							<small class="text-muted"></small>
-							<button type="button" class="ml-2 mb-1 close" data-dismiss="toast" aria-label="Close">
-								<span aria-hidden="true">&times;</span>
-							</button>
-						</div>
-						<div class="toast-body">
-							{{ session::has('error') ? Session::get('error') : Session::get('success') }}
-						</div>
-					</div>
-			
-				</div>
-			</div>
-	@endif
-
-			
-	<!-- Page Preloder -->
-	<div id="preloder">
-		<div class="loader"></div>
-	</div>
+<body style="@yield('background')">
+   <div id="overlay">
+    <div id="progstat" style="display: none;"></div>
+    <div id="progress"></div>
+  </div>
 
 
-	
-    @include('includes.header')
-    
-    @yield('template')
+<div class="modal fade" id="imagemodal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document" >
+    <div class="modal-content" style="background-color:#525252;color:#ff3000;-webkit-box-shadow: 10px 10px 5px 0px rgba(0,0,0,0.75);
+-moz-box-shadow: 10px 10px 5px 0px rgba(0,0,0,0.75);
+box-shadow: 10px 10px 5px 0px rgba(0,0,0,0.75);">      
+      <div class="modal-body" style="padding:0px 0px 20px 0px;">
+        <button type="button" class="close" style="color:#fff;padding:10px;" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+        <img src="" class="imagepreview" style="width: 100%;" >
+      </div>
+          </div>
+  </div>
+</div>
 
-		<!-- Footer section -->
-	<footer class="footer-section">
-		<div class="container">
-			<p class="copyright">
-<!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
-Copyright &copy;<script>document.write(new Date().getFullYear());</script> All rights reserved | <a href="#">A'L Clothes</a>
-<!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
-</p>
-		</div>
-	</footer>
-	<!-- Footer section end -->
+		@include('components.navigator')
+		
+ <div id="app">
+
+  @yield('content')
+
+    </div>
+
+  @yield('footer')
+</div>
 
 
-    <!--====== Javascripts & Jquery ======-->	
+        <script type="text/javascript">  
+            ;(function(){
+  function id(v){return document.getElementById(v); }
+  function loadbar() {
+    var ovrl = id("overlay"),
+        prog = id("progress"),
+        stat = id("progstat"),
+        img = document.images,
+        c = 0;
+        tot = img.length;
 
-@if(Session::has('error') || Session::has('success'))
-<script>
+    function imgLoaded(){
+      c += 1;
+      var perc = ((100/tot*c) << 0) +"%";
+      prog.style.width = perc;
+      stat.innerHTML = "Loading "+ perc;
+      if(c===tot) return doneLoading();
+    }
+    function doneLoading(){
+      ovrl.style.opacity = 0;
+      setTimeout(function(){ 
+        ovrl.style.display = "none";
+      }, 1200);
+    }
+    for(var i=0; i<tot; i++) {
+      var tImg     = new Image();
+      tImg.onload  = imgLoaded;
+      tImg.onerror = imgLoaded;
+      tImg.src     = img[i].src;
+    }    
+  }
+  document.addEventListener('DOMContentLoaded', loadbar, false);
+}());
+
+$ (document).ready (function () {
+  $ (".modal a").not (".dropdown-toggle").on ("click", function () {
+    $ (".modal").modal ("hide");
+  });
+});
+
+$(document).ready(function(){
+$('.albuns-row').show();
+$('.albuns-row').css('margin-left', '0%');
+
+
+
+$('.fotos-btn').click(function(){
+$('.albuns-btn').removeClass('active-btn');
+$('.albuns-row').css('margin-left', '100%');
+
+$('.albuns-row').hide();
+
+
+$('.fotos-btn').addClass('active-btn');
+$('.fotos-row').show();
+$('.fotos-row').css('opacity', '1');
+
+
+
+
+});
+$('.albuns-btn').click(function(){
+    $('.fotos-btn').removeClass('active-btn');
+    $('.fotos-row').hide();
+
+
+    $('.albuns-btn').addClass('active-btn');
+
+
+    $('.albuns-row').show();
+$('.albuns-row').css('margin-left', '0%');
+
+
+});
+});
+
+
+$(function() {
+  $('[data-toggle="tooltip"]').tooltip()
+
+    $('.pop').on('click', function() {
+      $('.imagepreview').attr('src', $(this).find('img').attr('src'));
+      $('#imagemodal').modal('show');   
+    });   
+    $('.popbg').on('click', function(){
+        var bgname = $(this).css('background-image');
+        var retorno = bgname.split("\"");
+        $('.imagepreview').attr('src', retorno[1]);
+      $('#imagemodal').modal('show');   
+      // alert(retorno[1]);
+  });
+});
+
+
     $(document).ready(function(){
-         $('#toastService').toast('show')
+       
 
+    $('.change-color').change(
+    function (){
+        var color = $('option:selected',this).css('background-color');
+        $(this).css('background-color',color);
+
+    }
+).change();
+
+    
     })
+
 </script>
-@endif
+<script type="text/javascript">
+        // duration of scroll animation
+var scrollDuration = 1000;
+// paddles
+var leftPaddle = document.getElementsByClassName('left-paddle');
+var rightPaddle = document.getElementsByClassName('right-paddle');
+// get items dimensions
+var itemsLength = $('.item').length;
+var itemSize = $('.item').outerWidth(true);
+// get some relevant size for the paddle triggering point
+var paddleMargin = 20;
 
-	<script src="{{ asset('js/owl.carousel.min.js') }}"></script>
-	<script src="{{ asset('js/mixitup.min.js') }}"></script>
-	<script src="{{ asset('js/sly.min.js') }}"></script>
-	<script src="{{ asset('js/jquery.nicescroll.min.js') }}"></script>
-	<script src="{{ asset('js/main.js') }}"></script>
+// get wrapper width
+var getMenuWrapperSize = function() {
+    return $('.menu-wrapper').outerWidth();
+}
+var menuWrapperSize = getMenuWrapperSize();
+// the wrapper is responsive
+$(window).on('resize', function() {
+    menuWrapperSize = getMenuWrapperSize();
+});
+// size of the visible part of the menu is equal as the wrapper size 
+var menuVisibleSize = menuWrapperSize;
 
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
-    </body>
+// get total width of all menu items
+var getMenuSize = function() {
+    return itemsLength * itemSize;
+};
+var menuSize = getMenuSize();
+// get how much of menu is invisible
+var menuInvisibleSize = menuSize - menuWrapperSize;
+
+// get how much have we scrolled to the left
+var getMenuPosition = function() {
+    return $('.menu').scrollLeft();
+};
+
+// finally, what happens when we are actually scrolling the menu
+$('.menu').on('scroll', function() {
+
+    // get how much of menu is invisible
+    menuInvisibleSize = menuSize - menuWrapperSize;
+    // get how much have we scrolled so far
+    var menuPosition = getMenuPosition();
+
+    var menuEndOffset = menuInvisibleSize - paddleMargin;
+
+    // show & hide the paddles 
+    // depending on scroll position
+    if (menuPosition <= paddleMargin) {
+        $(leftPaddle).addClass('hidden');
+        $(rightPaddle).removeClass('hidden');
+    } else if (menuPosition < menuEndOffset) {
+        // show both paddles in the middle
+        $(leftPaddle).removeClass('hidden');
+        $(rightPaddle).removeClass('hidden');
+    } else if (menuPosition >= menuEndOffset) {
+        $(leftPaddle).removeClass('hidden');
+        $(rightPaddle).addClass('hidden');
+}
+
+    // print important values
+    $('#print-wrapper-size span').text(menuWrapperSize);
+    $('#print-menu-size span').text(menuSize);
+    $('#print-menu-invisible-size span').text(menuInvisibleSize);
+    $('#print-menu-position span').text(menuPosition);
+
+});
+
+// scroll to left
+$(rightPaddle).on('click', function() {
+    $('.menu').animate( { scrollLeft: menuInvisibleSize}, scrollDuration);
+});
+
+// scroll to right
+$(leftPaddle).on('click', function() {
+    $('.menu').animate( { scrollLeft: '0' }, scrollDuration);
+});
+
+</script>
+<script>
+    $(document).on('click', '[data-toggle="lightbox"]', function(event) {
+                event.preventDefault();
+                $(this).ekkoLightbox({
+                   leftArrow: "<span style='color:#ff3000;'>❮</span>",
+                   rightArrow: "<span style='color:#ff3000;'>❯</span>",
+                });
+            });
+</script>
+<script>
+// jQuery.noConflict(); 
+
+  jQuery(function ($) {
+ $(".sidebar-dropdown > a").click(function () {
+
+        $(".sidebar-submenu").slideUp(200);
+        if ($(this).parent().hasClass("active")) {
+            $(".sidebar-dropdown").removeClass("active");
+            $(this).parent().removeClass("active");
+
+        } else {
+
+            $(".sidebar-dropdown").removeClass("active");
+            $(this).next(".sidebar-submenu").slideDown(200);
+            $(this).parent().addClass("active");
+        }
+
+    });
+
+  
+   
+});
+</script>
+<script>
+  $(document).ready(function(){
+  $('#btn-sidemodal').click(function(){
+    $('.modalcolapse-show').collapse('show');
+    $('.overlay-side').fadeIn();
+
+  })
+  $('.overlay-side').on('click', function(){
+    $('.modalcolapse-show').collapse('hide');
+    $('.overlay-side').fadeOut();
+
+  })
+  $('.button-exitsidebarmodal').click(function(){
+    $('.modalcolapse-show').collapse('hide');
+    $('.overlay-side').fadeOut();
+  })
+  })
+</script>
+  
+</body>
 </html>

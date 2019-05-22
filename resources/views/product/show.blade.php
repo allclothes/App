@@ -47,7 +47,7 @@
 	<!-- Page -->
 	@foreach ($product as $p)	
 	<?php 
-	$imgs = json_decode($p->image);
+	$imgs = json_decode($p->images);
 	?>
 	<div class="page-area product-page spad">
 		<div class="container">
