@@ -25,7 +25,7 @@ class CreateProductsTable extends Migration
 
             $table->string('name');
             $table->bigInteger('amount');
-            $table->bigInteger('cost');
+            $table->decimal('cost', 8, 2);
             $table->string('category');
             $table->longText('description');
             $table->string('images');

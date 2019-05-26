@@ -28,7 +28,7 @@
     <script src="{{ asset('/lightbox/ekko-lightbox.js') }}"></script>
     <link href="{{ asset('/lightbox/ekko-lightbox.css') }}" rel="stylesheet">
 
-
+  @yield("style")
 
 </head>
 <body style="@yield('background')">
@@ -306,5 +306,6 @@ $(leftPaddle).on('click', function() {
   })
 </script>
   
+  <script src="{{ asset('/js/jquery.maskedinput.js') }}"></script>
 </body>
 </html>

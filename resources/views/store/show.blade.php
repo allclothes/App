@@ -135,9 +135,8 @@
                                                         data-title="{{$p->name}}">
 
                                                         <div class="imgbox-card">
-                                                            <img class="card-img-top rounded-0"
-                                                                src="{{asset('img/product_images/'.$imgs[0])}}"
-                                                                alt="Card image cap" style="width: auto;height: 150px;background-position: center;">
+                                                            <img src="{{asset('img/product_images/'.$imgs[0])}}"
+                                                                alt="Card image cap" style="width:250px;height:150px;">
 
                                                         </div>
 
@@ -155,7 +154,7 @@
                                                     <div class="card-body" style="padding:5px 0 0 0;">
 
                                                         <p class="card-text album-title">
-                                                        <a href="/{{$s->name}}" style="color:#ff3000;">{{$p->name}}
+                                                        <a href="/{{$s->name}}/{{$p->url}}" style="color:#ff3000;">{{$p->name}}
                                                             </a>
                                                             <button
                                                                 class="float-right btn-showdesc bg-transparent cursor-pointer border-0"
@@ -172,15 +171,17 @@
                                                         <div class="collapse" id="openDescProduct-{{$p->id}}">
                                                             <div class="show-desc"
                                                                 style="font-size:0.8em;background-color: #3d3d3d;">
-                                                                <span class="text-white">{{$p->description}}</span>
+                                                                <span class="text-white">{{$p->description}}</span><br>
                                                                 <small class="text-muted">{{$p->created_at}}</small>
                                                             </div>
                                                         </div>
                                                         {{-- <small class="text-muted font-weight-bold">vendidos</small>                                                         --}}
                                                         <div class="clearfix"></div>
+                                                        <a href="/{{$s->name}}/{{$p->url}}">
                                                         <button class="btn-assinar" style="-webkit-transition: background-image 0.2s ease-in-out;
 transition: background-image 0.2s ease-in-out;">Comprar por R$ {{  number_format($p->cost, 2, "," , ".")}}</button>
                                                     </div>
+                                                </a>
 
                                                 </div>
                                         </div>

@@ -13,12 +13,6 @@ class productsController extends Controller
 
 
 
-    private $product;
-
-
-    public function __construct(Product $product){
-        $this->product = $product;
-    }
 
     /**
      * Display a listing of the resource.
@@ -27,7 +21,8 @@ class productsController extends Controller
      */
     public function index()
     {
-        $products = DB::table('products')->where('user_id', auth::user()->id)->paginate(12);
+        $getStore = DB::table('store')->where('user_id', auth::user()->id)->limit(1)->value('id');
+        $products = DB::table('products')->where('store_id', $getStore)->paginate(12);
 
         return view('product.index', ['products' => $products]);
     }
@@ -68,7 +63,8 @@ class productsController extends Controller
             $p->store_id = $getStoreId;
             $p->name = $request->input('name');
             $p->amount = $request->input('amount');
-            $p->cost = $request->input('cost');
+            $cost = str_replace(',', '.', $request->input('cost'));
+            $p->cost = $cost;
             $p->description = $request->input('description');
 
             // if(in_array($request->input('category'), $categories))
@@ -118,18 +114,15 @@ class productsController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($store, $url)
+    public function show($id)
     {
-        $checkStore = DB::table('store')->where('name', $store)->limit(1)->value('id');
-        if(isset($checkStore)){
-        $get = DB::table('products')->where('url', $url)->where('store_id', $checkStore)->get();
-        if(count($get) > 0)
-        return view('product.show', ['product' => $get]);
-        else
-        return redirect('/')->with('Error', 'Este produto não existe nesta loja.');
-    }else{
-        return redirect('/')->with('Error', 'Esta loja não existe.');
-    }
+
+        $getProduct = DB::table('products')->where('id', $id)->value('store_id');
+        $getProductUrl = DB::table('products')->where('id', $id)->value('url');
+        if(isset($getProduct)){
+            $getStore = DB::table('store')->where('id', $getProduct)->value('name');          
+                return redirect('/'.$getStore.'/'.$getProductUrl);            
+        }
     }
 
     /**
@@ -140,7 +133,7 @@ class productsController extends Controller
      */
     public function edit($id)
     {
-        //
+       
     }
 
     /**
@@ -152,7 +145,29 @@ class productsController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        if(isset($id) && is_int($id) && auth::check() && isset($request)){
+            $get = DB::table('products')->where('id', $id)->get();
+            $storeid = DB::table('products')->where('id', $id)->value('store_id');
+            $producturl = DB::table('products')->where('id', $id)->value('url');
+            if(count($get) > 0 && isset($storeid)){
+                $isAuthStore = DB::table('store')->where('id', $storeid)->value('user_id');
+                if($isAuthStore == auth::user()->id){
+                    $p = Product::find($id);
+                    $p->cost = $request->cost;
+                    $p->amount = $request->amount;
+                    $p->description = $request->description;
+                    if($p->save())
+                        return redirect('/'.auth::user()->storename.'/'.$producturl);
+                    else
+                        return redirect()->back()->with('Error', 'Aconteceu algum erro.');
+
+                }  else{
+                    return redirect()->back()->with('Error', 'Você não pode editar este item.');
+                }
+            }
+        }else{
+            return redirect()->back();
+        }
     }
 
     /**
@@ -163,6 +178,25 @@ class productsController extends Controller
      */
     public function destroy($id)
     {
-        //
+        if(isset($id) && is_int($id) && auth::check()){
+            $get = DB::table('products')->where('id', $id)->get();
+            $storeid = DB::table('products')->where('id', $id)->value('store_id');
+            if(count($get) > 0 && isset($storeid)){
+                $isAuthStore = DB::table('store')->where('id', $storeid)->value('user_id');
+                if($isAuthStore == auth::user()->id){
+
+                    $p = Product::find($id);
+                    if($p->delete())
+                    return redirect()->back()->with('Success', 'Produto deletado com sucesso!');
+                    else
+                    return redirect()->back()->with('Error', 'Aconteceu algum erro.');
+
+                }  else{
+                    return redirect()->back()->with('Error', 'Você não pode editar este item.');
+                }
+            }
+        }else{
+            return redirect()->back();
+        }
     }
 }

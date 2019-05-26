@@ -18,7 +18,6 @@
                     <span class="fas fa-bars"></span>
                 </div>
                 </button>
-            
 				<form class="form" action="{{route('store.store')}}" method="post" id="registrationForm" enctype="multipart/form-data">
 					@csrf
                 		<h3>Crie sua loja!</h3>

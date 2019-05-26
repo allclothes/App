@@ -231,15 +231,9 @@ footer a {
 	
 				</div>
 				@endfor
-	
-			  
 			</div>
-			  
-	
-	
 			</div>
 			
-	
 	   </div>
 	   </div>
 	 
@@ -251,7 +245,7 @@ footer a {
 		<div class="container">
 		<img src="{{asset("img/logo.png")}}" alt="">
 		<div class="clearfix"></div>
-		<small>Todas imagens ao ser inserida no site são protegidas pelo Google Image Copyright. Ao caso de divulgação não autorizada será tomada medidas judiciais cabiveis.</small>
+		<small>Payme (R).</small>
 	  </div>
 	  
 	</footer>

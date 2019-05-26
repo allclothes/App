@@ -25,4 +25,4 @@ Route::prefix('/control-panel')->group(function () {
 Auth::routes();
 
 Route::get('/{name}', 'storeController@show');
-Route::get('/{store}/{url}', 'productsController@show');
+Route::get('/{store}/{url}', 'storeController@showProduct');

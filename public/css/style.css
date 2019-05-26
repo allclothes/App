@@ -706,7 +706,7 @@ overflow: hidden;
 }
 .spaces-card .imgbox-card img
 {
-	min-width: 300px;
+	/* min-width: 300px; */
 	min-height: 200px;
 	background-color: #333333;
 

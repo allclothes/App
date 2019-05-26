@@ -5,23 +5,16 @@
                 		<div>
                             @foreach ($products as $p)
 
-                            <div class="card col-sm-4 col-md-3" style="background:transparent;">                                   
-                                <span class="b-2" style="font-size:1.2em;">{{$p->name}}</span>
-                                @php
-                                    $img = json_decode($p->images);
-                                @endphp
-                                <img class="card-img-top" src="{{asset('img/product_images/'.$img[0]) }}" alt="Card image cap">
+                            <div class="card col-sm-4 col-md-3">                                   
+                                <h6 class="card-subtitle mb-2 text-muted">{{$p->name}}</h6>
+                                <img class="card-img-top" src="{{$p->images[0]}}" alt="Card image cap">
                                         <div class="card-body">
                                             <div class="row">
                                             <div class="col">
                                             <a style="cursor:pointer;" data-toggle="modal" data-target="#editProductModal-{{$p->id}}">Edit</a>
                                             </div>
                                             <div class="col">
-                                              <form action="{{route('product.destroy', $p->id)}}">
-                                                @csrf
-                                                @method('DELETE')
-                                            <button type="submit" style="border:none;background:transparent;color:#fafafa;" onclick="return confirm('Você está certo que quer deletar este produto?');">Delete</a>
-                                            </form>
+                                            <a href="{{route('product.destroy', $p->id)}}" onclick="return confirm('Você está certo que quer deletar este produto?');">Delete</a>
                                         </div>
                                     </div>
                                               
@@ -38,23 +31,15 @@
                                             <span aria-hidden="true">&times;</span>
                                           </button>
                                         </div>
-                                        <form action="{{route('product.update', $p->id)}}">
+                                        <form action="{{route('product.edit', {{$p->id}})}}">
                                             @csrf
-                                            @method('PUT')
-
                                         <div class="modal-body">
                                             <div class="row">
 
-                                                <div class="form-group col-sm-6">
-
-                                                    <label for="inlineFormInputGroupUsername2">Preço</label>
-                                                    <div class="input-group mb-2 mr-sm-2">
-                                                      <div class="input-group-prepend">
-                                                        <div class="input-group-text">R$</div>
-                                                      </div>
-                                                    <input type="text" name="cost" value="{{$p->cost}}" data-mask="000.000.000.000.000,00" data-mask-reverse="true" class="form-control" id="inlineFormInputGroupUsername2" placeholder="0,00">
-                                                    </div>
-                                              </div>
+                                            <div class="form-group col-sm-6">
+                                                <label for="value">Preço</label>
+                                            <input type="text" name="cost" class="form-control" value="{{$p->cost}}" id="value">
+                                             </div>
 
                                              <div class="form-group col-sm-6">
                                                 <label for="value">Quantity</label>
@@ -63,7 +48,9 @@
                                             </div>
                                             <div class="form-group">
                                                 <label for="desc">Description</label>
-                                            <textarea name="description" class="form-control" id="descr" rows="3">{{$p->description}}</textarea>
+                                                <textarea name="description" class="form-control" id="descr" rows="3">
+                                                    {{$p->description}}
+                                                </textarea>
                                             </div>
                                         </div>
                                         <div class="modal-footer">

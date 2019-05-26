@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\Store;
 use Illuminate\Support\Facades\Auth;
 use DB;
+use App\Http\Requests\NewStoreRequest;
 
 class storeController extends Controller
 {
@@ -38,16 +39,17 @@ class storeController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(NewStoreRequest $request)
     {
         if(auth::check() && isset($request) && $request->isMethod('post')){
-                
+            $store = new Store;
+            $validatedData = $request->validated();
+
             $check = DB::table('store')->where('user_id', auth::user()->id)->get();
 
             if(count($check) > 0)
                 return redirect()->back()->with('Error', 'Você já possui um canal.');
 
-            $store = new Store;
 
             $name = str_replace(" ", "", $request->input('name'));
             $name = strtolower($name);
@@ -104,6 +106,23 @@ class storeController extends Controller
         }
         else
         return redirect()->back();
+    }
+
+
+    public function showProduct($store, $url)
+    {
+        $checkStore = DB::table('store')->where('name', $store)->limit(1)->value('id');
+        if(isset($checkStore)){
+        $store = DB::table('store')->where('name', $store)->limit(1)->get();
+        $get = DB::table('products')->where('url', $url)->where('store_id', $checkStore)->get();
+        if(count($get) > 0)
+        return view('store.product', ['product' => $get, 'store' => $store]);
+        else
+        return redirect('/')->with('Error', 'Este produto não existe nesta loja.');
+            }else{
+        return redirect('/')->with('Error', 'Esta loja não existe.');
+        }
+        
     }
 
     /**
