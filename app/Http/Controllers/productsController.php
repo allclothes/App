@@ -7,6 +7,7 @@ use App\Models\Product;
 use Image;
 use Illuminate\Support\Facades\Auth;
 use DB;
+use App\Http\Requests\UpdateProductRequest;
 
 class productsController extends Controller
 {
@@ -53,7 +54,7 @@ class productsController extends Controller
             $getStoreId = DB::table('store')->where('user_id', auth::user()->id)->limit(1)->value('id');
 
             if(!isset($getStoreId)){
-                return redirect('/control-panel/store/create')->with('Error', 'Primeiro crie a sua loja virtual!');
+                return redirect('/control-panel/store/create')->with('error', 'Primeiro crie a sua loja virtual!');
             }
 
             try{
@@ -70,7 +71,7 @@ class productsController extends Controller
             // if(in_array($request->input('category'), $categories))
             $p->category = $request->input('category');
             // else
-            // return redirect()->back()->withErrors($validator)->withInput('error', 'Catégoria inválida.');
+            // return redirect()->back()->witherrors($validator)->withInput('error', 'Catégoria inválida.');
             
 
 
@@ -143,9 +144,9 @@ class productsController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(UpdateProductRequest $request, $id)
     {
-        if(isset($id) && is_int($id) && auth::check() && isset($request)){
+        if(isset($id) && auth::check() && isset($request)){
             $get = DB::table('products')->where('id', $id)->get();
             $storeid = DB::table('products')->where('id', $id)->value('store_id');
             $producturl = DB::table('products')->where('id', $id)->value('url');
@@ -153,20 +154,24 @@ class productsController extends Controller
                 $isAuthStore = DB::table('store')->where('id', $storeid)->value('user_id');
                 if($isAuthStore == auth::user()->id){
                     $p = Product::find($id);
-                    $p->cost = $request->cost;
+                    $validatedData = $request->validated();
+                    $cost = str_replace(',', '.', $request->cost);
+                    $p->cost = $cost;
                     $p->amount = $request->amount;
                     $p->description = $request->description;
                     if($p->save())
                         return redirect('/'.auth::user()->storename.'/'.$producturl);
                     else
-                        return redirect()->back()->with('Error', 'Aconteceu algum erro.');
+                        return redirect()->back()->with('error', 'Aconteceu algum erro.');
 
                 }  else{
-                    return redirect()->back()->with('Error', 'Você não pode editar este item.');
+                    return redirect()->back()->with('error', 'Você não pode editar este item.');
                 }
+            }else{
+                return redirect()->back()->with('error', 'Você não pode editar este item.');
             }
         }else{
-            return redirect()->back();
+            return redirect()->back()->with('error', 'Sem permissão para isto.');
         }
     }
 
@@ -178,7 +183,8 @@ class productsController extends Controller
      */
     public function destroy($id)
     {
-        if(isset($id) && is_int($id) && auth::check()){
+
+        if(isset($id) && auth::check()){
             $get = DB::table('products')->where('id', $id)->get();
             $storeid = DB::table('products')->where('id', $id)->value('store_id');
             if(count($get) > 0 && isset($storeid)){
@@ -187,16 +193,22 @@ class productsController extends Controller
 
                     $p = Product::find($id);
                     if($p->delete())
-                    return redirect()->back()->with('Success', 'Produto deletado com sucesso!');
+                    return redirect()->back()->with('success', 'Produto deletado com sucesso!');
                     else
-                    return redirect()->back()->with('Error', 'Aconteceu algum erro.');
+                    return redirect()->back()->with('error', 'Aconteceu algum erro.');
 
                 }  else{
-                    return redirect()->back()->with('Error', 'Você não pode editar este item.');
+                    return redirect()->back()->with('error', 'Você não pode editar este item.');
                 }
             }
+            
         }else{
             return redirect()->back();
         }
+    }
+
+    public function getBack(){
+
+        return redirect()->back()->with('error', 'osps abal');
     }
 }

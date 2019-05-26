@@ -22,6 +22,9 @@
 		src="https://code.jquery.com/jquery-3.4.1.min.js"
 		integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo="
 		crossorigin="anonymous"></script>
+    {{-- <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.6/umd/popper.min.js" integrity="sha384-wHAiFfRlMFy6i5SRaxvfOCifBUQy1xHdJ/yoi7FRNXMRBu5WHdZYu1hA6ZOblgut" crossorigin="anonymous"></script> --}}
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js" integrity="sha384-B0UglyR+jN6CkvvICOB2joaf5I4l3gm9GU6Hc1og6Ls7i6U/mkkaduKaBhlAXv9k" crossorigin="anonymous"></script>
+
     <script src="{{ asset('/js/bootstrap.min.js') }}"></script>
     <script src="{{ asset('/js/bootstrap.bundle.js') }}"></script>
 
@@ -37,6 +40,29 @@
     <div id="progress"></div>
   </div>
 
+  @if(session('error') || session('success'))
+  <script>
+    $( document ).ready(function() {
+      $('#warningToast').toast({delay:5000});
+      $('#warningToast').toast('show');
+    });
+  </script>
+  <div aria-live="polite" aria-atomic="true" style="z-index:9999999;position: fixed; top: 20px; right: 20px;min-height:200px;" >
+    <div class="toast" id="warningToast">
+    <div class="toast-header {{session('error') ? 'bg-warning' : 'bg-success'}}">
+          <i class="{{session('error') ? 'fas fa-exclamation-circle' : 'fas fa-check-double'}}"></i>
+        <strong class="mr-auto">&nbsp;&nbsp;{{session('error') ? 'Ops!' : 'Sucesso!'}}</strong>        
+        <small>Agora</small>
+        <button type="button" class="ml-2 mb-1 close" data-dismiss="toast" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="toast-body" style="color:#212529;">
+        {{session('error') ? session('error') : session('success')}}
+      </div>
+    </div>
+  </div>
+  @endif
 
 <div class="modal fade" id="imagemodal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
   <div class="modal-dialog modal-dialog-centered" role="document" >

@@ -2,7 +2,9 @@
 @section('body-content')
 <div class="all-products">
 <h3>Meus produtos</h3>
+<hr>
                 		<div>
+                      @if(count($products) > 0)
                             @foreach ($products as $p)
 
                             <div class="card col-sm-4 col-md-3" style="background:transparent;">                                   
@@ -17,7 +19,7 @@
                                             <a style="cursor:pointer;" data-toggle="modal" data-target="#editProductModal-{{$p->id}}">Edit</a>
                                             </div>
                                             <div class="col">
-                                              <form action="{{route('product.destroy', $p->id)}}">
+                                              <form action="{{route('product.destroy', $p->id)}}" method="POST">
                                                 @csrf
                                                 @method('DELETE')
                                             <button type="submit" style="border:none;background:transparent;color:#fafafa;" onclick="return confirm('Você está certo que quer deletar este produto?');">Delete</a>
@@ -38,7 +40,7 @@
                                             <span aria-hidden="true">&times;</span>
                                           </button>
                                         </div>
-                                        <form action="{{route('product.update', $p->id)}}">
+                                        <form action="{{route('product.update', $p->id)}}" method="POST">
                                             @csrf
                                             @method('PUT')
 
@@ -76,6 +78,11 @@
                                   </div>
 
                                 @endforeach
+                                    
+                                @else
+                                    
+                                <p>Você não possui ainda não tem produtos. Começe <a href="{{route('product.create')}}"> adicionando agora!</a></p>
+                                @endif
 
                         </div>
                 </div>

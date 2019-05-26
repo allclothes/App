@@ -23,6 +23,7 @@ Route::prefix('/control-panel')->group(function () {
 });
 
 Auth::routes();
-
+Route::get('/getpollget', 'productsController@getBack');
 Route::get('/{name}', 'storeController@show');
 Route::get('/{store}/{url}', 'storeController@showProduct');
+

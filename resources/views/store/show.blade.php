@@ -16,7 +16,10 @@
                         <div class="page-content" align="left">
                             <div class="header-page" style="display:block;">
                                 <div class="page-capa popbg" style="
+background-size: 100%;    
+background-position:center;
             background-image:url(/img/stores/{{$s->backgroundimg}});
+            
     background-color:#333333;">
                                 </div>
 
