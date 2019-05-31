@@ -1,9 +1,8 @@
 <?php
 
-Route::get('/', function(){
-    return view('index');
-});
+Route::get('/', 'controller@index');
 
+Route::get('/search', 'productsController@searchProduct')->name('search');
 
 Route::get('/menu', function(){
     return view('smart_menu');

@@ -35,7 +35,10 @@ background-position:center;
 
                                         </div>
                                     </div>
-                                    <span class="title-page" style="margin-right: 5px;">{{$s->name}}</span>
+                                    <span class="title-page" style="width: 100%;
+                                    white-space: nowrap;
+                                    overflow: hidden;
+                                    text-overflow: ellipsis;margin-right: 5px;">{{$s->name}}</span>
                                     <span class="desc-page">{{ $s->instagram ? '' : $s->instagram }}</span>
 
                                 </div>
@@ -82,27 +85,32 @@ background-position:center;
 
                                 <div class="fotos-content col-md-12 text-center" id="fotos-content"
                                     style="padding-bottom: 10px;">
-                                    <div class="row">
+                                    <div class="row text-left">
 
-                                        <div class="megafoto col-md-12">
-                                            <a href="{{asset('img/exemples/model1.jpg')}}" data-type="image"
-                                                data-disable-external-check="false"
-                                                data-title="<span style='color:#ff3000;'>Aline Faria</span>"
-                                                data-toggle="lightbox" data-gallery="fotos-preview">
-                                                <img src="{{asset("img/exemples/model1.jpg")}}" class="img-responsive"
-                                                    alt="">
-                                            </a>
+                                        
+                                            @if(count($others)>0)
+                                            @foreach($others as $o)
+                                            @php
+                                                    
+                                                    $img = json_decode($o->images);
+                                            @endphp
+                                            <a href="/{{getStoreNameByStoreId($o->store_id)}}/{{$o->url}}">
+                                            <div class="card" style="margin-bottom:20px;border-radius:0px;background-color:transparent;width:10em;">
+                                                <img class="card-img-top" src="{{asset('img/product_images/'.$img[0])}}" alt="{{$o->name}}">
+                                                <div class="card-body" style="word-wrap: nowrap;margin:0;padding:0;">
+                                                    <span style="width: 100%;
+                                                    white-space: nowrap;
+                                                    overflow: hidden;
+                                                    text-overflow: ellipsis;">{{$o->name}}</span> - 
+                                                <small>{{getStoreNameByStoreId($o->id)}}</small>			
+                                                </div>
+                                            </div>
+                                        </a>
+                                            @endforeach
+                                            @endif
 
-                                        </div>
-                                        <span class="text-muted fotos-btn cursor-pointer">+ 6 fotos.</span>
                                     </div>
-
-
                                 </div>
-
-
-
-
                             </div>
 
                             <div class="content col-md-9" align="left" style="">
@@ -111,9 +119,6 @@ background-position:center;
                                 <h3 class="header-index">
                                     Vitrine
                                 </h3>
-
-
-
                                 <div class="container-full">
 
 

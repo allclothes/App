@@ -218,19 +218,20 @@ footer a {
 		  
 		  <div class="col-xl-2 col-md-6" id="publicity" style="padding:0 0 0 10px;">
 	
-			<h5 style="margin-bottom:30px;">Outros álbuns</h5>
+			<h5 style="margin-bottom:30px;">Recomendados</h5>
 			  
 			  
 			<div class="card-albuns" style="height: 400px;">
-	
-				@for($i=0;$i<4;$i++)
+				@if(count($others)>0)
+				@foreach($others as $o)
 			  <div class="card-cardotheralbum">
-				<span>  Curso ingles <small class="text-muted"> • 17 fotos </small></span>
+				<span>  {{$o->name}} <small class="text-muted"> • {{getStoreNameByProductId($o->id)}} </small></span>
 				<div class="othersalbum"> 
 				</div>
 	
 				</div>
-				@endfor
+				@endforeach
+				@endif
 	
 			  
 			</div>
@@ -243,7 +244,7 @@ footer a {
 	   </div>
 	   </div>
 	 
-	   		
+</div>
 	@endforeach
 	@endforeach
 

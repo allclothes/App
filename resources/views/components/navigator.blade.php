@@ -10,13 +10,14 @@
 
        </div>
        </div>
-
-      <div class="input-group col-xl-4 col-md-5 col-sm">
-        <input type="text" id="search" class="form-control" placeholder="Buscar no Pay.me">
+          <form action="{{route('search')}}" class="input-group col-xl-4 col-md-5 col-sm">
+        <input type="text" id="search" name="s" class="form-control" placeholder="Buscar no Pay.me">
         <div class="input-group-append">
-      <button class="btn-search rounded-right" type="button">Buscar</button>
+      <button class="btn-search rounded-right" type="submit">Buscar</button>    
       </div>
-    </div>
+    </form>
+    
+
 
 
     <div class="collapse navbar-collapse" id="navbarPmeWiixDesenvolment">

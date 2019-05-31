@@ -94,7 +94,8 @@ class storeController extends Controller
     public function show($name)
     {
         $getstore = DB::table('store')->where('name', $name)->limit(1)->get();
-
+        $getstoreid = DB::table('store')->where('name', $name)->value('id');
+        $others = DB::table('products')->where('store_id', '!=', $getstoreid)->limit(6)->get();
         if(count($getstore) > 0){
 
             foreach ($getstore as $s) {
@@ -102,7 +103,7 @@ class storeController extends Controller
                 $comments = DB::table('comments')->where('to_store_id', $s->id)->orderBy('created_at', 'DESC')->limit(6)->get();
             }
             
-        return view('store.show', ['store' => $getstore, 'products' => $products, 'comments' => $comments]);
+        return view('store.show', ['store' => $getstore, 'products' => $products, 'comments' => $comments, 'others' =>  $others]);
         }
         else
         return redirect()->back();
@@ -115,8 +116,10 @@ class storeController extends Controller
         if(isset($checkStore)){
         $store = DB::table('store')->where('name', $store)->limit(1)->get();
         $get = DB::table('products')->where('url', $url)->where('store_id', $checkStore)->get();
+        
+        $others = DB::table('products')->where('store_id', '!=', $checkStore)->limit(4)->get();
         if(count($get) > 0)
-        return view('store.product', ['product' => $get, 'store' => $store]);
+        return view('store.product', ['product' => $get, 'store' => $store, 'others' => $others]);
         else
         return redirect('/')->with('Error', 'Este produto não existe nesta loja.');
             }else{

@@ -15,108 +15,28 @@
 
 		<ul class="menu">
 
+			@if(count($stores) > 0)
+			@foreach($stores as $s)
 			<div class="item spaces-card col-xl-3 col-md-3 col-sm-4 col-12" style="padding:0 5px 10px 0px;">
-					<a href="/page">
+			<a href="/{{$s->name}}">
 						<div class="card actors bg-transparent" style="border-radius:0;">
 							
 							<div class="imgtop">
-								<img class="user-rating img-responsive rounded-0" src="{{asset('img/exemples/exempleactor.jpg')}}" alt="NomeAtriz">
+								<img class="user-rating img-responsive rounded-0" src="{{asset('img/stores/'.$s->profileimg)}}" alt="{{$s->name}}">
 								</div>
 							<div class="card-body">
-								<p class="card-text">Aline Faria
+								<p class="card-text">{{$s->name}}
 									<div class="clearfix"></div>
-									<span style="font-size: 0.9em;">14 produtos</span></p>
+									<span style="font-size: 0.9em;">{{ countProductByStore($s->id) }} produtos</span></p>
 									
 								</div>
 							</div>
 						</a>
 					</div>
-
-						<div class="item spaces-card col-md-3  col-sm-4 col-12" style="padding:0 5px 10px 0px;">
-					<a href="/page">
-						<div class="card actors bg-transparent" style="border-radius:0;">
-							
-							<div class="imgtop">
-								<img class="user-rating img-responsive rounded-0" src="{{asset('img/exemples/exempleactor.jpg')}}" alt="NomeAtriz">
-								</div>
-							<div class="card-body">
-								<p class="card-text">Aline Faria
-									<div class="clearfix"></div>
-									<span style="font-size: 0.9em;">5 álbuns</span></p>
-									
-								</div>
-							</div>
-						</a>
-					</div>
-
-						<div class="item spaces-card col-md-3 col-sm-4 col-12"  style="padding:0 5px 10px 0px;">
-					<a href="/page">
-						<div class="card actors bg-transparent" style="border-radius:0;">
-							
-							<div class="imgtop">
-								<img class="user-rating img-responsive rounded-12" src="{{asset('img/exemples/exempleactor.jpg')}}" alt="NomeAtriz">
-								</div>
-							<div class="card-body">
-								<p class="card-text">Aline Faria
-									<div class="clearfix"></div>
-									<span style="font-size: 0.9em;">5 álbuns</span></p>
-									
-								</div>
-							</div>
-						</a>
-					</div>
-
-						<div class="item spaces-card col-md-3 col-sm-4 col-12" style="padding:0 5px 10px 0px;">
-					<a href="/page">
-						<div class="card actors bg-transparent" style="border-radius:0;">
-							
-							<div class="imgtop">
-								<img class="user-rating img-responsive rounded-12" src="{{asset('img/exemples/exempleactor.jpg')}}" alt="NomeAtriz">
-								</div>
-							<div class="card-body">
-								<p class="card-text">Aline Faria
-									<div class="clearfix"></div>
-									<span style="font-size: 0.9em;">5 álbuns</span></p>
-									
-								</div>
-							</div>
-						</a>
-					</div>
-
-					<div class="item spaces-card col-md-3 col-sm-4 col-12" style="padding:0 5px 10px 0px;">
-					<a href="/page">
-						<div class="card actors bg-transparent" style="border-radius:0;">
-								<div class="imgtop">
-								<img class="user-rating img-responsive rounded-0" src="{{asset('img/exemples/exempleactor.jpg')}}" alt="NomeAtriz">
-								</div>
-												
-							
-							<div class="card-body">
-								<p class="card-text">Aline Faria
-									<div class="clearfix"></div>
-									<span style="font-size: 0.9em;">5 álbuns</span></p>
-									
-								</div>
-							</div>
-						</a>
-					</div>
-
-						<div class="item spaces-card col-md-3 col-sm-4 col-12" style="padding:0 5px 10px 0px;">
-					<a href="/page">
-						<div class="card actors bg-transparent" style="border-radius:0;">
-							
-							<div class="imgtop">
-								<img class="user-rating img-responsive rounded-0" src="{{asset('img/exemples/exempleactor.jpg')}}" alt="NomeAtriz">
-								</div>
-							<div class="card-body">
-								<p class="card-text">Aline Faria
-									<div class="clearfix"></div>
-									<span style="font-size: 0.9em;">5 álbuns</span></p>
-									
-								</div>
-							</div>
-						</a>
-					</div>
+					@endforeach
+					@else
+					<h3>Não encontramos nenhuma loja =(</h3>
+					@endif
 	</ul>
 
 	<div class="paddles">
@@ -133,264 +53,40 @@
 </div>
 </div>
 
+@if(count($products) > 0)
 <hr class="hr">
 <div class="rowline">
-		<h3 class="header-index">Álbuns mais recentes</h3>
+		<h3 class="header-index">Últimos produtos</h3>
 		
 			<div class="row" style="padding-left:15px;padding-right:15px">
 
+				@foreach($products as $e)
+				@php
+					$img = json_decode($e->images);
+				@endphp
 			<div class="item spaces-card col-md-3 col-sm-6" style="padding:0 5px 10px 0px;">
-					<a href="/page">
+					<a href="/{{getStoreNameByStoreId($e->store_id)}}/{{$e->url}}">
 						<div class="card albums bg-transparent" style="border-radius:0;">
 							
 							<div class="imgtop">
-								<img class="user-rating img-responsive rounded-0" src="{{asset('img/exemples/exemplealbum.jpg')}}" alt="NomeAtriz">
+								<img class="user-rating img-responsive rounded-0" src="{{asset('img/product_images/'.$img[0])}}" alt="NomeAtriz">
 								</div>
 							<div class="card-body" style="text-align: left;">
 								<table>
-									<tr><td>Curtindo o verão - <small> Aline Faria</small></td></tr>
-									<tr><td class="smalltd">17 fotos</td></tr>
-									<tr><td> <button class="btn-assinar">Assinar por R$ 48,00</button></td></tr>
+								<tr><td>{{$e->name}} - <small> {{getStoreNameByStoreId($e->store_id)}}</small></td></tr>
+									<tr><td> <button class="btn-assinar">Comprar por R$ {{ number_format($e->cost, 2, ',', '.')}}</button></td></tr>
 								</table>
 									
 								</div>
 							</div>
 						</a>
 					</div>
-
-						<div class="item spaces-card col-md-3 col-sm-6" style="padding:0 5px 10px 0px;">
-					<a href="/page">
-						<div class="card albums bg-transparent" style="border-radius:0;">
-							
-							<div class="imgtop">
-								<img class="user-rating img-responsive rounded-0" src="{{asset('img/exemples/exemplealbum.jpg')}}" alt="NomeAtriz">
-								</div>
-							<div class="card-body" style="text-align: left;">
-								<table>
-									<tr><td>Curtindo o verão - <small> Aline Faria</small></td></tr>
-									<tr><td class="smalltd">17 fotos</td></tr>
-									<tr><td> <button class="btn-assinar">Assinar por R$ 48,00</button></td></tr>
-								</table>
-									
-								</div>
-							</div>
-						</a>
-					</div>
-
-				<div class="item spaces-card col-md-3 col-sm-6" style="padding:0 5px 10px 0px;">
-					<a href="/page">
-						<div class="card albums bg-transparent" style="border-radius:0;">
-							
-							<div class="imgtop">
-								<img class="user-rating img-responsive rounded-0" src="{{asset('img/exemples/exemplealbum.jpg')}}" alt="NomeAtriz">
-								</div>
-							<div class="card-body" style="text-align: left;">
-								<table>
-									<tr><td>Curtindo o verão - <small> Aline Faria</small></td></tr>
-									<tr><td class="smalltd">17 fotos</td></tr>
-									<tr><td> <button class="btn-assinar">Assinar por R$ 48,00</button></td></tr>
-								</table>
-									
-							</div>
-						</div>
-					</a>
-				</div>
-
-				<div class="item spaces-card col-md-3 col-sm-6" style="padding:0 5px 10px 0px;">
-					<a href="/page">
-						<div class="card albums bg-transparent" style="border-radius:0;">
-							
-							<div class="imgtop">
-								<img class="user-rating img-responsive rounded-0" src="{{asset('img/exemples/exemplealbum.jpg')}}" alt="NomeAtriz">
-								</div>
-							<div class="card-body" style="text-align: left;">
-								<table>
-									<tr><td>Curtindo o verão - <small> Aline Faria</small></td></tr>
-									<tr><td class="smalltd">17 fotos</td></tr>
-									<tr><td> <button class="btn-assinar">Assinar por R$ 48,00</button></td></tr>
-								</table>
-									
-							</div>
-						</div>
-					</a>
-				</div>
+					@endforeach
 
 
 </div>
 		</div>
-
-<hr style="color:#525252;background-color:#525252;width: 100%;">
-
-		<div class="rowline">
-		<h3 class="header-index">Álbuns mais assinados</h3>
-		
-		<div class="row" style="padding-left:15px;padding-right:15px">
-
-			<div class="item spaces-card col-md-3 col-sm-6" style="padding:0 5px 10px 0px;">
-					<a href="/page">
-						<div class="card albums bg-transparent" style="border-radius:0;">
-							
-							<div class="imgtop">
-								<img class="user-rating img-responsive rounded-0" src="{{asset('img/exemples/exemplealbum.jpg')}}" alt="NomeAtriz">
-								</div>
-							<div class="card-body" style="text-align: left;">
-								<table>
-									<tr><td>Curtindo o verão - <small> Aline Faria</small></td></tr>
-									<tr><td class="smalltd">17 fotos</td></tr>
-									<tr><td> <button class="btn-assinar">Assinar por R$ 48,00</button></td></tr>
-								</table>
-									
-								</div>
-							</div>
-						</a>
-					</div>
-
-					<div class="item spaces-card col-md-3 col-sm-6" style="padding:0 5px 10px 0px;">
-					<a href="/page">
-						<div class="card albums bg-transparent" style="border-radius:0;">
-							
-							<div class="imgtop">
-								<img class="user-rating img-responsive rounded-0" src="{{asset('img/exemples/exemplealbum.jpg')}}" alt="NomeAtriz">
-								</div>
-							<div class="card-body" style="text-align: left;">
-								<table>
-									<tr><td>Curtindo o verão - <small> Aline Faria</small></td></tr>
-									<tr><td class="smalltd">17 fotos</td></tr>
-									<tr><td> <button class="btn-assinar">Assinar por R$ 48,00</button></td></tr>
-								</table>
-									
-								</div>
-							</div>
-						</a>
-					</div>
-
-					<div class="item spaces-card col-md-3 col-sm-6" style="padding:0 5px 10px 0px;">
-					<a href="/page">
-						<div class="card albums bg-transparent" style="border-radius:0;">
-							
-							<div class="imgtop">
-								<img class="user-rating img-responsive rounded-0" src="{{asset('img/exemples/exemplealbum.jpg')}}" alt="NomeAtriz">
-								</div>
-							<div class="card-body" style="text-align: left;">
-								<table>
-									<tr><td>Curtindo o verão - <small> Aline Faria</small></td></tr>
-									<tr><td class="smalltd">17 fotos</td></tr>
-									<tr><td> <button class="btn-assinar">Assinar por R$ 48,00</button></td></tr>
-								</table>
-									
-								</div>
-							</div>
-						</a>
-					</div>
-
-					<div class="item spaces-card col-md-3 col-sm-6" style="padding:0 5px 10px 0px;">
-					<a href="/page">
-						<div class="card albums bg-transparent" style="border-radius:0;">
-							
-							<div class="imgtop">
-								<img class="user-rating img-responsive rounded-0" src="{{asset('img/exemples/exemplealbum.jpg')}}" alt="NomeAtriz">
-								</div>
-							<div class="card-body" style="text-align: left;">
-								<table>
-									<tr><td>Curtindo o verão - <small> Aline Faria</small></td></tr>
-									<tr><td class="smalltd">17 fotos</td></tr>
-									<tr><td> <button class="btn-assinar">Assinar por R$ 48,00</button></td></tr>
-								</table>
-									
-								</div>
-							</div>
-						</a>
-					</div>
-
-</div>
-		</div>
-
-
-<hr class="hr">
-
-	<div class="rowline">
-		<h3 class="header-index">Álbuns melhores avaliados</h3>
-		
-			<div class="row" style="padding-left:15px;padding-right:15px">
-
-			<div class="item spaces-card col-md-3 col-sm-6" style="padding:0 5px 10px 0px;">
-					<a href="/page">
-						<div class="card albums bg-transparent" style="border-radius:0;">
-							
-							<div class="imgtop">
-								<img class="user-rating img-responsive rounded-0" src="{{asset('img/exemples/exemplealbum.jpg')}}" alt="NomeAtriz">
-								</div>
-							<div class="card-body" style="text-align: left;">
-								<table>
-									<tr><td>Curtindo o verão - <small> Aline Faria</small></td></tr>
-									<tr><td class="smalltd">17 fotos</td></tr>
-									<tr><td> <button class="btn-assinar">Assinar por R$ 48,00</button></td></tr>
-								</table>
-									
-								</div>
-							</div>
-						</a>
-					</div>
-
-					<div class="item spaces-card col-md-3 col-sm-6" style="padding:0 5px 10px 0px;">
-					<a href="/page">
-						<div class="card albums bg-transparent" style="border-radius:0;">
-							
-							<div class="imgtop">
-								<img class="user-rating img-responsive rounded-0" src="{{asset('img/exemples/exemplealbum.jpg')}}" alt="NomeAtriz">
-								</div>
-							<div class="card-body" style="text-align: left;">
-								<table>
-									<tr><td>Curtindo o verão - <small> Aline Faria</small></td></tr>
-									<tr><td class="smalltd">17 fotos</td></tr>
-									<tr><td> <button class="btn-assinar">Assinar por R$ 48,00</button></td></tr>
-								</table>
-									
-								</div>
-							</div>
-						</a>
-					</div>
-
-					<div class="item spaces-card col-md-3 col-sm-6" style="padding:0 5px 10px 0px;">
-					<a href="/page">
-						<div class="card albums bg-transparent" style="border-radius:0;">
-							
-							<div class="imgtop">
-								<img class="user-rating img-responsive rounded-0" src="{{asset('img/exemples/exemplealbum.jpg')}}" alt="NomeAtriz">
-								</div>
-							<div class="card-body" style="text-align: left;">
-								<table>
-									<tr><td>Curtindo o verão - <small> Aline Faria</small></td></tr>
-									<tr><td class="smalltd">17 fotos</td></tr>
-									<tr><td> <button class="btn-assinar">Assinar por R$ 48,00</button></td></tr>
-								</table>
-									
-								</div>
-							</div>
-						</a>
-					</div>
-
-					<div class="item spaces-card col-md-3 col-sm-6" style="padding:0 5px 10px 0px;">
-					<a href="/page">
-						<div class="card albums bg-transparent" style="border-radius:0;">
-							
-							<div class="imgtop">
-								<img class="user-rating img-responsive rounded-0" src="{{asset('img/exemples/exemplealbum.jpg')}}" alt="NomeAtriz">
-								</div>
-							<div class="card-body" style="text-align: left;">
-								<table>
-									<tr><td>Curtindo o verão - <small> Aline Faria</small></td></tr>
-									<tr><td class="smalltd">17 fotos</td></tr>
-									<tr><td> <button class="btn-assinar">Assinar por R$ 48,00</button></td></tr>
-								</table>
-									
-								</div>
-							</div>
-						</a>
-					</div>
-
-
-</div>
+		@endif
 
 
 

@@ -1,26 +1,25 @@
 <?php
 
-use App\User;
-use Illuminate\Support\Str;
 use Faker\Generator as Faker;
 
-/*
-|--------------------------------------------------------------------------
-| Model Factories
-|--------------------------------------------------------------------------
-|
-| This directory should contain each of the model factory definitions for
-| your application. Factories provide a convenient way to generate new
-| model instances for testing / seeding your application's database.
-|
-*/
+function storename($name){
+    $x = str_replace(' ', '-', $name);
+    $x = strtolower($x);
+    $x = str_replace('.', '', $x);
+    return $x.'Store';
+}
 
-$factory->define(User::class, function (Faker $faker) {
+$factory->define(App\User::class, function (Faker $faker) {
     return [
-        'name' => $faker->name,
-        'email' => $faker->unique()->safeEmail,
-        'email_verified_at' => now(),
-        'password' => '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', // password
-        'remember_token' => Str::random(10),
+            'name'          => $faker->firstName,
+            'lastname'      => $faker->lastName,
+            'username'      => $faker->unique()->userName,
+            'email'         => $faker->unique()->safeEmail,
+            'birthday'      => "04/07/1996",
+            "sex"           => $faker->randomElement(['male', 'female']),
+            'storename'     => storename($faker->unique()->text($maxNbChars = 10)),
+            'balance'       => $faker->randomFloat($nbMaxDecimals = NULL, $min = 0, $max = 400),
+            'cpf'           => $faker->unique()->numberBetween($min = 10000000000, $max = 99999999999),
+            'password'      => bcrypt('BHU*nji9'),      
     ];
 });

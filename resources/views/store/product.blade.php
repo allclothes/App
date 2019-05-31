@@ -73,7 +73,7 @@ footer a {
 		  <div class="paymefull"> 
 			<div class="row">
 			<div class="profile-img"> 
-			  <a href="/page">
+			<a href="/{{$s->name}}">
 				<img src="{{asset('img/stores/'.$s->profileimg)}}" class="rounded-circle" width="75" height="75" alt="">
 				</a>
 			</div>      
@@ -197,7 +197,7 @@ footer a {
 							<div class="row" style="margin-top:1em;">
 								<!-- Description -->
 								<div class="col-12">
-									<div class="card border-light mb-3"  style="background:transparent;">
+									<div class="card border-light mb-3"  style="border-radius:0px;background:transparent;">
 										<div class="card-header text-white text-uppercase" style="background-color:#2b2b2b;"><i class="fa fa-align-justify"></i> Description</div>
 										<div class="card-body" >
 											<p class="card-text">
@@ -218,20 +218,37 @@ footer a {
 		  
 		  <div class="col-xl-2 col-md-6" id="publicity" style="padding:0 0 0 10px;">
 	
-			<h5 style="margin-bottom:30px;">Outros álbuns</h5>
-			  
-			  
-			<div class="card-albuns" style="height: 400px;">
-	
-				@for($i=0;$i<4;$i++)
-			  <div class="card-cardotheralbum">
-				<span>  Curso ingles <small class="text-muted"> • 17 fotos </small></span>
-				<div class="othersalbum"> 
-				</div>
-	
-				</div>
-				@endfor
-			</div>
+					<h5 style="margin-bottom:30px;">Recomendados</h5>
+						
+						
+					{{-- <div class="card-albuns" style="height: 400px;"> --}}
+						@if(count($others)>0)
+						@foreach($others as $o)
+						@php
+								
+								$img = json_decode($o->images);
+						@endphp
+						<a href="/{{getStoreNameByStoreId($o->store_id)}}/{{$o->url}}">
+						<div class="card" style="margin-bottom:20px;border-radius:0px;background-color:transparent;width:10em;">
+							<img class="card-img-top" src="{{asset('img/product_images/'.$img[0])}}" alt="{{$o->name}}">
+							<div class="card-body" style="word-wrap: nowrap;margin:0;padding:0;">
+								<span style="width: 100%;
+								white-space: nowrap;
+								overflow: hidden;
+								text-overflow: ellipsis;">{{$o->name}}</span> - 
+							<small>{{getStoreNameByStoreId($o->id)}}</small>			
+							</div>
+						</div>
+					</a>
+						@endforeach
+						@endif
+			
+						
+					</div>
+						
+			
+			
+					</div>
 			</div>
 			
 	   </div>

@@ -175,6 +175,21 @@ class productsController extends Controller
         }
     }
 
+    public function searchProduct(){
+        if(isset($_GET) && isset($_GET['s'])){ 
+            $p = DB::table('products')->where('name', 'LIKE', '%'.$_GET['s'].'%')->orderBy('created_at', 'DESC')->paginate(24);
+            $s = DB::table('store')->where('name', 'LIKE', '%'.$_GET['s'].'%')->orderBy('created_at', 'DESC')->paginate(24);
+        }else{
+            
+            
+            return view('product.search', ['findings' => [], 'stores' => []]);
+        
+        }
+     
+
+        return view('product.search', ['findings' => $p, 'stores' => $s]);
+    }
+
     /**
      * Remove the specified resource from storage.
      *
