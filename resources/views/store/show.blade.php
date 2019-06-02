@@ -60,17 +60,17 @@ background-position:center;
                                     </p>
                                     <hr class="hr">
                                     @if(isset($s->instagram) || isset($s->facebook))
-                                    <div class="col-md-12" align="center" style="padding:0 0 0 0;margin:0 0 0 0;">
-                                        <ul class="rede-social">
+                                    <div align="center" style="text-align:left;padding:5px;">
+                                        <ul class="rede-social" style="padding:10px;">
 
                                           @if(isset($s->instagram))
-                                            <a href="#" target="_blank">
-                                                <li><i class="fab fa-instagram"></i> {{$s->instagram}} </li>
+                                        <a href="https://instagram.com/{{$s->instagram}}" target="_blank">
+                                                <li style="padding:5px;padding-left:15px;"><i class="fab fa-instagram"></i>&nbsp; {{$s->instagram}} </li>
                                             </a>
                                             @endif
                                             @if(isset($s->facebook))
-                                            <a href="#" target="_blank">
-                                                <li><i class="fab fa-facebook"></i> {{$s->facebook}}</li>
+                                        <a href="https://facebook.com/{{$s->facebook}}" target="_blank">
+                                                <li style="padding:5px;padding-left:15px;"><i class="fab fa-facebook"></i>&nbsp; {{$s->facebook}}</li>
                                             </a>
                                             @endif
 

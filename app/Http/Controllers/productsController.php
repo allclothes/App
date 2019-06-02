@@ -9,6 +9,12 @@ use Illuminate\Support\Facades\Auth;
 use DB;
 use App\Http\Requests\UpdateProductRequest;
 
+use App\Models\Address;
+use App\Models\Cart;
+use App\Models\ProductHistory;
+
+
+
 class productsController extends Controller
 {
 
@@ -28,6 +34,169 @@ class productsController extends Controller
         return view('product.index', ['products' => $products]);
     }
 
+    public function cleanCarrinho(request $request){
+        $request->session()->forget('carrinho');
+       
+        return redirect()->back()->with('success', 'Carrinho limpo com sucesso!');
+    }
+
+    public function addCarrinho(Request $request){
+        if($request->session()->has('carrinho')){
+            $g = $request->session()->get('carrinho');
+            $find = false;
+            if($g['store'] != $request->store){
+                return redirect()->back()->with('error', 'Você já possui um carrinho com outra loja. Finalize-a primeiro!');
+            }
+
+            for ($i=0; $i < count($g['data']); $i++) {
+                if($g['data'][$i]['id'] == $request->productId){
+                    $qn = $g['data'][$i]['quantity'] + $request->productQuantity;
+                    if($qn > $request->productMaxQuantity) return redirect()->back()->with('error', 'O produto não contém o estoque desejado.');
+
+
+                    $g['data'][$i]['quantity'] += $request->productQuantity;
+                    $g['data'][$i]['cost'] = $request->productCost*$g['data'][$i]['quantity'];
+                    $find = true;
+                    
+                }
+                
+            }
+            if($find){
+                $request->session()->put('carrinho', $g);                    
+                return redirect()->back()->with('success', 'Produto adicionado com sucesso!');
+            }
+
+            $x = [
+                'id'        =>      $request->productId,
+                'name'      =>      $request->productName,
+                'quantity'  =>      $request->productQuantity,
+                'cost' =>           $request->productCost*$request->productQuantity,
+            ];
+
+            array_push($g['data'], $x);
+
+        $request->session()->put('carrinho', $g);
+        
+        return redirect()->back()->with('success', 'Produto adicionado ao carrinho!');
+
+        }else{
+            $request->productCost = $request->productQuantity*$request->productCost;
+        $json = [
+            'store'         =>     $request->store,
+            'createdAt'     =>     now(),
+            'data'          =>     []
+        ];
+        $x = [
+            'id'        =>      $request->productId,
+            'name'      =>      $request->productName,
+            'quantity'  =>      $request->productQuantity,
+            'cost' =>           $request->productCost,
+        ];
+        array_push($json['data'], $x);
+
+        $request->session()->put('carrinho', $json);
+        
+        return redirect()->back()->with('success', 'Produto adicionado ao carrinho!');
+    }
+
+
+
+    }
+
+    function searchIdOfArray($arr, $id){
+        foreach ($arr as $key=>$v) {
+            if($v['id'] === $id)
+                return $key;
+        }
+    }
+
+
+    public function DelCarrinho(Request $request){
+        if(!$request->session()->has('carrinho')) return redirect()->back()->with('error', 'Você ainda não possui um carrinho de nenhuma loja.');
+        $products = $request->session()->get('carrinho');
+        if(!count($products['data']) > 0) return redirect()->back()->with('error', 'O seu carrinho esta vázio.');
+       
+        $gv = self::searchIdOfArray($products['data'], $request->id);
+        unset($products['data'][$gv]);       
+   
+        $request->session()->put('carrinho', $products);
+
+        return redirect()->back()->with('success', 'Produto removido do carrinho!');
+
+    }
+
+
+    public function checkout(){
+        return view('checkout');
+    }
+
+    public function confirmCheckout(request $request){
+        if(!auth::check()) return redirect('/register')->with('success', 'É necessário fazer o login. Mas relaxa, deixei seu carrinho guardado ;)');
+
+        if(!$request->session()->has('carrinho')) return redirect('/')->with('error', 'Você não pode fazer o checkout de um carrinho vazio!');
+        if(!isset($request->session()->get('carrinho')['data'])) return redirect('/')->with('error', 'Você não pode fazer o checkout de um carrinho vazio!');
+
+        return view('checkout_2');
+    }
+
+    public function storeCart(Request $request){
+
+        if(!$request->isMethod('post')) return redirect('/')->with('error', 'Method no allowed');
+        if(!auth::check())  return redirect('/login')->with('error', 'No authenticated');
+        if(!$request->session()->has('carrinho'))  return redirect('/')->with('error', 'Você não possui um carrinho');
+        if(!$request->session()->get('carrinho')['data'])  return redirect('/')->with('error', 'O seu carrinho esta vazio');
+        if(!$request->session()->get('carrinho')['data'] > 0)  return redirect('/')->with('error', 'O seu carrinho esta vazio');
+        
+        $session = $request->session()->get('carrinho');
+        $found = false;
+        $getAddress = DB::table("address")->where('user_id', auth::user()->id)->get();
+        foreach ($getAddress as $k => $v) {
+            if($v->zip_code == $request->cep)
+                $found = $v->id;
+        }
+        $ph = new ProductHistory;
+
+        if($found){
+
+        $ph->address_id = $found;
+
+
+        }else{
+        $address = new Address;
+
+        $address->user_id = auth::user()->id;
+
+        $address->country = $request->country;
+        $address->state = $request->state;
+        $address->city = $request->city;        
+        $address->zip_code = $request->cep;
+        $address->address = $request->address;
+
+        if($address->save()) $ok_address = true;
+
+        $ph->address_id = $address->id;
+        }
+        $gStoreId = DB::table('store')->where('name', $session['store'])->value('id');
+        
+        $ph->store_id   =   $gStoreId;      
+        $ph->user_id    =   auth::user()->id;
+        $ph->status     =   "waiting";
+        $ph->save();
+
+        foreach ($session['data'] as $value) {
+            $cart = new Cart;
+            $cart->history_id = $ph->id;
+            $cart->product_id = $value['id'];
+            $cart->quantity = $value['quantity'];
+            $cart->cost = $value['cost'];
+            $cart->timestamps = false;
+            $cart->save();
+        }
+        $request->session()->forget('carrinho');
+
+        return redirect('/control-panel/paymentHistory')->with('success', 'Compra realizada com sucesso! Uhuul');
+       
+    }
     /**
      * Show the form for creating a new resource.
      *

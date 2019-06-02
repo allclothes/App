@@ -14,7 +14,15 @@ a:hover
 	color:#bdbdbd;
 }
 
-
+.ul-navigation
+{
+	display:table;
+}
+.ul-navigation > li
+{
+	display:table-cell;
+	vertical-align: middle;
+}
 body
 {
 	overflow-y: scroll;
@@ -306,26 +314,25 @@ nav #search:focus{
 	box-shadow: 0 !important;
 	border:0;
 }
-
-nav .btn-search
-{	
+.btn-search
+{
 	cursor: pointer;
 	font-weight: bold;
 	border:none;
 	background-color:#ff3000;
 	color:#525252;
-	height:30px; 
+	/* height:30px;  */
 }
-nav .btn-search:hover
+.btn-search:hover
 {
 	background-color:#d72800;
 }
-nav .btn-search,.btn-search{
+.btn-search,.btn-search:hover{
 	transition: all .2s ease;
 	-webkit-transition: all .2s ease;
 	-moz-transition: all .2s ease;
 }
-nav .btn-search:focus
+.btn-search:focus
 {
 	outline:none;
 }
@@ -965,7 +972,6 @@ transition: linear 500ms;
 
 .paddle {
 	cursor: pointer;
-	z-index: 999999999;
 	color:#fff;
 	border: none;
 		background-color:transparent;
@@ -1812,7 +1818,7 @@ body {
 }*/
 
 .page-wrapper .page-content {
-  overflow-x: hidden;
+  overflow: hidden;
 }
 
 /*------scroll bar---------------------*/

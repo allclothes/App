@@ -12,15 +12,13 @@
     <title>Pay.me @yield('title')</title>
 
     <!-- Styles -->
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="stylesheet" href="{{asset('/css/bootstrap.min.css')}}" />
 	
-    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css" integrity="sha384-oS3vJWv+0UjzBfQzYUhtDYW+Pj2yciDJxpsK1OYPAYjqT085Qq/1cq5FLXAZQ7Ay" crossorigin="anonymous">
+    <link rel="stylesheet" href="{{asset('/font-awesome/css/all.css')}}" >
     <link href="{{ asset('/css/style.css') }}" rel="stylesheet">
 
     <script
-		src="https://code.jquery.com/jquery-3.4.1.min.js"
-		integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo="
-        crossorigin="anonymous"></script>
+    src="{{asset('/js/jquery-3.4.1.min.js')}}"></script>
         
     <script src="{{ asset('/js/bootstrap.min.js') }}"></script>
     <script src="{{ asset('/js/jquery.maskedinput.js') }}"></script>
@@ -334,6 +332,30 @@ a:hover
 
 </head>
 <body>
+        @if(session('error') || session('success'))
+        <script>
+          $(function(){
+            $('#warningToast').toast({delay:5000});
+            $('#warningToast').toast('show');
+          });
+        </script>
+        <div aria-live="polite" aria-atomic="true" style="z-index:9999999;position: fixed; top: 5em; right: 20px;min-height:200px;" >
+          <div class="toast" id="warningToast">
+          <div class="toast-header {{session('error') ? 'bg-warning' : 'bg-info'}}">
+                <i class="{{session('error') ? 'fas fa-exclamation-circle' : 'fas fa-check-double'}}"></i>
+              <strong class="mr-auto">&nbsp;&nbsp;{{session('error') ? 'Ops!' : 'Heyy!'}}</strong>        
+              <small>Agora</small>
+              <button type="button" class="ml-2 mb-1 close" data-dismiss="toast" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="toast-body" style="color:#212529;">
+              {{session('error') ? session('error') : session('success')}}
+            </div>
+          </div>
+        </div>
+        @endif
+        
     <div id="app">
 
         @yield('content')

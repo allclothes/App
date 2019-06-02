@@ -1,6 +1,14 @@
 @extends('layouts.default')
 @section('title', '')
 @section("background", 'background-color:#171717;')
+@section("style")
+<style>
+.form-control{
+	border-radius: 0px;
+	border:0px;
+}
+</style>
+@endsection
 @section('content')
 <div class="container page-wrapper chiller-theme toggled">
 
@@ -50,7 +58,7 @@
 
 									<div class="col-sm-9">	
 										<div class="background_img cursor-pointer mb-3" >										
-											<img src="http://ssl.gstatic.com/accounts/ui/avatar_2x.png" class="avatar-background" style="border:solid 2px #fafafa;" onclick="callBackgroundInput();" height="150" width="100%" alt="" style="margin-bottom:10px;">	
+										<img src="{{asset("/img/banner_default.jpg")}}" class="avatar-background" style="background-color:#ddd;border:solid 2px #fafafa;" onclick="callBackgroundInput();" height="auto" width="100%" alt="" style="margin-bottom:10px;">	
 											<input type="file" name="backgroundimg" class="backgroundimg-upload" id="backgroundFile" style="display:none;">
 										</div>
 
@@ -68,14 +76,6 @@
 
 												  <div class="form-group">
 													  
-														<div class="col-xs-6">
-															<label for="url">Link</label>
-															<input type="text" class="form-control" name="url" id="url" disabled>
-														</div>
-													</div>
-
-												  <div class="form-group">
-													  
 													  <div class="col-xs-6">
 														<label for="last_name">Description</label>
 														<textarea name="description" class="form-control" id="last_name" cols="30" rows="10"></textarea>
@@ -85,8 +85,10 @@
 												  <div class="form-group">
 													   <div class="col-xs-12 text-right">
 															<br>
-															  <button class="btn btn-success" type="submit"><i class="glyphicon glyphicon-ok-sign"></i> Save</button>
-															   <button class="btn btn-lg" type="reset"><i class="glyphicon glyphicon-repeat"></i> Reset</button>
+																<button class="btn-search" type="submit" style="padding:10px;"><i class="glyphicon glyphicon-ok-sign"></i> Save</button>
+																<a href="/control-panel/store/create">
+																 <button class="btn btn-lg" style="color:#ccc;" type="reset"><i class="glyphicon glyphicon-repeat"></i> Reset</button>
+																</a>
 														</div>
 												  </div>
 											  

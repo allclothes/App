@@ -40,12 +40,12 @@
 
   @if(session('error') || session('success'))
   <script>
-    $( document ).ready(function() {
+    $(function(){
       $('#warningToast').toast({delay:5000});
       $('#warningToast').toast('show');
     });
   </script>
-  <div aria-live="polite" aria-atomic="true" style="z-index:9999999;position: fixed; top: 20px; right: 20px;min-height:200px;" >
+  <div aria-live="polite" aria-atomic="true" style="z-index:9999999;position: fixed; top: 5em; right: 20px;min-height:200px;" >
     <div class="toast" id="warningToast">
     <div class="toast-header {{session('error') ? 'bg-warning' : 'bg-success'}}">
           <i class="{{session('error') ? 'fas fa-exclamation-circle' : 'fas fa-check-double'}}"></i>

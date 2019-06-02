@@ -12,6 +12,7 @@ class Controller extends BaseController
 {
     use AuthorizesRequests, DispatchesJobs, ValidatesRequests;
 
+    
     public function index(){
         $produtos = DB::table('products')
             ->where('deletedAt', null)

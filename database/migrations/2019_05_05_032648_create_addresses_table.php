@@ -13,7 +13,7 @@ class CreateAddressesTable extends Migration
      */
     public function up()
     {
-        Schema::create('addresses', function (Blueprint $table) {
+        Schema::create('address', function (Blueprint $table) {
             $table->bigIncrements('id');
 
             $table->integer('user_id')->unsigned();
@@ -21,13 +21,11 @@ class CreateAddressesTable extends Migration
             ->references('id')->on('users')
             ->onDelete('cascade');
 
-            $table->string('address');
-            $table->string('number');
             $table->string('country');
             $table->string('state');
             $table->string('city');
-            $table->string('neighborhood');
             $table->string('zip_code');
+            $table->string('address');
 
             $table->timestamps();
         });
@@ -40,6 +38,6 @@ class CreateAddressesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('addresses');
+        Schema::dropIfExists('address');
     }
 }

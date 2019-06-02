@@ -3,6 +3,9 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Auth;
+use DB;
+
 
 class HomeController extends Controller
 {
@@ -13,7 +16,7 @@ class HomeController extends Controller
      */
     public function __construct()
     {
-        //$this->middleware('auth');
+        $this->middleware('auth');
     }
 
     /**
@@ -24,5 +27,11 @@ class HomeController extends Controller
     public function index()
     {
         return view('control-panel.index');
+    }
+
+    public function paymentHistory(){
+        $get = DB::table('products_history')->where('user_id', auth::user()->id)->orderBy('created_at', 'DESC')->get();
+        
+        return view('control-panel.paymentHistory', ['phistory' => $get]);
     }
 }

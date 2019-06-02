@@ -1,5 +1,12 @@
 <?php
 
+function urlProduct($name){
+    $x = str_replace(' ', '-', $name);
+    $x = str_replace('.', '', $x);
+    $x = strtolower($x);
+    return $x;
+}
+
 $factory->define(App\Models\Store::class, function(\Faker\Generator $faker) {
     return [
         'description' => $faker->text,        
@@ -32,16 +39,11 @@ $factory->define(App\Models\Store::class, function(\Faker\Generator $faker) {
             'bi-3.jpg',
             'bi-4.png',
         ]),
-        'instagram'     => '@'.$faker->unique()->text($maxNbChars = 10),
-        'facebook'      => 'facebook.com/'.$faker->unique()->text($maxNbChars = 10),
+        'instagram'     => urlProduct($faker->unique()->text($maxNbChars = 10)),
+        'facebook'      => urlProduct($faker->unique()->text($maxNbChars = 10)),
     ];
 });
-function urlProduct($name){
-    $x = str_replace(' ', '-', $name);
-    $x = str_replace('.', '', $x);
-    $x = strtolower($x);
-    return $x;
-}
+
 $factory->define(App\Models\Product::class, function(\Faker\Generator $faker) {
     
 

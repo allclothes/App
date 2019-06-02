@@ -127,12 +127,11 @@ footer a {
 						
 								<!-- Add to cart -->
 								<div class="col-12 col-lg-6 add_to_cart_block">
-
+									<form action="{{route('addCart')}}" method="post">
 									<div class="card bg-light mb-3">
 										<div class="card-body">
 										<p class="price">R$ {{ number_format($p->cost, 2, ',', '.') }}</p>										
-											{{-- <p class="price_discounted">149.90 $</p> --}}
-											<form method="get" action="cart.html">											
+											{{-- <p class="price_discounted">149.90 $</p> --}}											
 												<div class="form-group">
 													<script>
 														$(document).ready(function(){
@@ -165,7 +164,8 @@ footer a {
 																<i class="fa fa-minus"></i>
 															</button>
 														</div>
-													<input type="number" class="form-control" id="quantity" name="quantity" data-min="1" data-max="{{$p->amount}}" value="1" readonly>
+
+													<input type="number" class="form-control" id="quantity" name="productQuantity" data-min="1" data-max="{{$p->amount}}" value="1" readonly>
 
 														<div class="input-group-append">
 															<button type="button" class="quantity-right-plus btn btn-success btn-number" data-type="plus" data-field="">
@@ -174,8 +174,6 @@ footer a {
 														</div>
 													</div>
 												</div>
-												
-											</form>
 											<div class="product_rassurance">
 												<ul class="list-inline">
 													<li class="list-inline-item"><i class="fa fa-truck fa-2x"></i><br/>Fast delivery</li>
@@ -184,9 +182,17 @@ footer a {
 												</ul>
 											</div>
 											<div style="margin-top:20px;">
-											<a href="cart.html" class="btn btn-success btn-lg btn-block text-uppercase">
+											
+												@csrf
+											<input type="hidden" value="{{$s->name}}" name="store">
+											<input type="hidden" value="{{$p->id}}" name="productId">
+											<input type="hidden" value="{{$p->name}}" name="productName">
+											<input type="hidden" value="{{$p->cost}}" name="productCost">
+											<input type="hidden" value="{{$p->amount}}" name="productMaxQuantity" >
+											<button type="submit" class="btn btn-success btn-lg btn-block text-uppercase">
 													<i class="fa fa-shopping-cart"></i> Add To Cart
-												</a>
+												</button>
+											</form>
 											</div>
 										</div>
 										

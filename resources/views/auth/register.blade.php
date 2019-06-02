@@ -21,11 +21,16 @@
                             <form method="POST" action="{{ route('register') }}">
 
                                 @csrf
+                                <script>
+                                function Trim(str){
+	                                    return str.replace(/^\s+|\s+$/g,"");
+                                    }
+                                </script>
 
                                 <div class="row register-form">
                                     <div class="col-md-6">
                                         <div class="form-group">
-                                            <input type="text" class="form-control @error('name') is-invalid @enderror" placeholder="Primeiro nome *" name="name" value="{{ old('name') }}" required/>
+                                            <input type="text" onkeyup="this.value = Trim( this.value )" autocomplete="off" class="form-control @error('name') is-invalid @enderror" placeholder="Primeiro nome *" name="name" value="{{ old('name') }}" required/>
 
                                             @if ($errors->has('name'))
                                     <span class="help-block">
@@ -34,7 +39,7 @@
                                 @endif
                                         </div>
                                         <div class="form-group">
-                                            <input type="text" class="form-control @error('lastname') is-invalid @enderror" placeholder="Sobrenome *" name="lastname" value="{{ old('lastname') }}" required />
+                                            <input type="text" class="form-control @error('lastname') is-invalid @enderror" autocomplete="off" placeholder="Sobrenome *" name="lastname" value="{{ old('lastname') }}" required />
 
                                             @error('lastname')
                                         <span class="invalid-feedback" role="alert">
@@ -106,7 +111,7 @@
                                             <div class="checkbox">
 
                                                 <input type="checkbox" class="checkbox" id="terms" required>
-                                                <label for="terms">Li e concordo com os <a href="#">termos de uso.</a></label>
+                                                <label for="terms" style="color:#000;">Li e concordo com os <a href="#" style="color:blue;">termos de uso.</a></label>
                                             </div>
                                         </div>
                                         <input type="submit" class="btnRegister"  value="Registrar"/>

@@ -5,7 +5,12 @@
 
                 <div class="sidebar-header">
                     <div class="user-pic" >
+                        @if(isset(auth::user()->storename))
+                        <img class="img-responsive img-rounded" src="{{asset("img/stores/".getStoreProfileImageByStoreName(auth::user()->storename))}}" alt="User picture">
+
+                        @else
                         <img class="img-responsive img-rounded" src="{{asset("img/exemples/user.jpg")}}" alt="User picture">
+                        @endif
                     </div>
                     <div class="user-info">
                         <span class="user-name">{{auth::user()->username}}                           
@@ -44,10 +49,10 @@
                             <div class="sidebar-submenu">
                                 <ul>
                                     <li>
-                                        <a href="#">Geral                                            
+                                        <a href="/control-panel">Geral                                            
                                         </a>
                                     </li>
-                                    <li>
+                                    {{-- <li>
                                         <a href="#">Segurança e login</a>
                                     </li>
                                     <li>
@@ -55,7 +60,7 @@
                                     </li>
                                     <li>
                                         <a href="#">Assinaturas</a>
-                                    </li>
+                                    </li> --}}
                                 </ul>
                             </div>
                         </li>
@@ -66,16 +71,18 @@
                             </a>
                             <div class="sidebar-submenu">
                                 <ul>
-                                    <li>
+                                    {{-- <li>
                                         <a href="#">Adicionar Fundo
                                             <span class="badge badge-pill badge-success">Pro</span>                           
                                         </a>
                                     </li>                                    
                                     <li>
                                         <a href="#">Histórico de transações</a>
-                                    </li>
+                                    </li> --}}
                                     <li>
-                                        <a href="#">Comprovar pagamento</a>
+                                        <a href="/control-panel/payments/history">Historico de compras
+                                        <span class="badge badge-pill badge-success">Pro</span>    
+                                    </a>
                                     </li>
                                 </ul>
                             </div>
@@ -120,7 +127,7 @@
                                 </div>
                             </li>
                         @endif
-                        <li class="sidebar-dropdown">
+                        {{-- <li class="sidebar-dropdown">
                             <a href="#">
                                 <i class="fa fa-chart-line"></i>
                                 <span>Reports</span>
@@ -151,7 +158,7 @@
                                     </li>
                                 </ul>
                             </div>
-                        </li>
+                        </li> --}}
                         {{-- <li class="header-menu">
                             <span>Extra</span>
                         </li>
@@ -181,15 +188,15 @@
             <div class="sidebar-footer">
                 <a href="#">
                     <i class="fa fa-bell"></i>
-                    <span class="badge badge-pill badge-warning notification">3</span>
+                    <span class="badge badge-pill badge-warning notification">0</span>
                 </a>
                 <a href="#">
                     <i class="fa fa-envelope"></i>
-                    <span class="badge badge-pill badge-success notification">7</span>
+                    <span class="badge badge-pill badge-success notification">0</span>
                 </a>
-                <a href="#">
+                <a href="/control-panel">
                     <i class="fa fa-cog"></i>
-                    <span class="badge-sonar"></span>
+                    {{-- <span class="badge-sonar"></span> --}}
                 </a>
                 <a href="#">
                     <i class="fa fa-power-off"></i>
