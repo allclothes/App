@@ -315,33 +315,48 @@ class productsController extends Controller
      */
     public function update(UpdateProductRequest $request, $id)
     {
-        if(isset($id) && auth::check() && isset($request)){
-            $get = DB::table('products')->where('id', $id)->get();
-            $storeid = DB::table('products')->where('id', $id)->value('store_id');
-            $producturl = DB::table('products')->where('id', $id)->value('url');
-            if(count($get) > 0 && isset($storeid)){
-                $isAuthStore = DB::table('store')->where('id', $storeid)->value('user_id');
-                if($isAuthStore == auth::user()->id){
-                    $p = Product::find($id);
+        // if(isset($id) && auth::check() && isset($request)){
+        //     $get = DB::table('products')->where('id', $id)->get();
+        //     $storeid = DB::table('products')->where('id', $id)->value('store_id');
+        //     $producturl = DB::table('products')->where('id', $id)->value('url');
+        //     if(count($get) > 0 && isset($storeid)){
+        //         $isAuthStore = DB::table('store')->where('id', $storeid)->value('user_id');
+        //         if($isAuthStore == auth::user()->id){
+        //             $p = Product::find($id);
+        //             $validatedData = $request->validated();
+        //             $cost = str_replace(',', '.', $request->cost);
+        //             $p->cost = $cost;
+        //             $p->amount = $request->amount;
+        //             $p->description = $request->description;
+        //             if($p->save())
+        //                 return redirect('/'.auth::user()->storename.'/'.$producturl);
+        //             else
+        //                 return redirect()->back()->with('error', 'Aconteceu algum erro.');
+
+        //         }  else{
+        //             return redirect()->back()->with('error', 'Você não pode editar este item.');
+        //         }
+        //     }else{
+        //         return redirect()->back()->with('error', 'Você não pode editar este item.');
+        //     }
+        // }else{
+        //     return redirect()->back()->with('error', 'Sem permissão para isto.');
+        // }
+        $sid = Product::where('id', $id)->value('store_id');
+        $suid = db::table('store')->where('id', $sid)->value('user_id');
+        if(auth::check() && auth::user()->id == $suid){
+        $p = Product::find($id);
                     $validatedData = $request->validated();
                     $cost = str_replace(',', '.', $request->cost);
                     $p->cost = $cost;
                     $p->amount = $request->amount;
                     $p->description = $request->description;
                     if($p->save())
-                        return redirect('/'.auth::user()->storename.'/'.$producturl);
-                    else
-                        return redirect()->back()->with('error', 'Aconteceu algum erro.');
-
-                }  else{
-                    return redirect()->back()->with('error', 'Você não pode editar este item.');
-                }
-            }else{
-                return redirect()->back()->with('error', 'Você não pode editar este item.');
-            }
+                        return redirect()->back()->with('success', 'Produto modificado com sucesso! =P');
         }else{
-            return redirect()->back()->with('error', 'Sem permissão para isto.');
+            return redirect()->back()->with('error', 'Aconteceu alguma coisa, não consegui editar =(');
         }
+
     }
 
     public function searchProduct(){
