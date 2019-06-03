@@ -16,7 +16,7 @@ Route::prefix('/control-panel')->group(function () {
     
 
     Route::resource('store', 'storeController');
-    Route::resource('product', 'productsConptroller');
+    Route::resource('product', 'productsController');
 
     route::get('/{x}', function(){
         return redirect('/control-panel');
