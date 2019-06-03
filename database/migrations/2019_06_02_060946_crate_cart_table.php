@@ -16,14 +16,16 @@ class CrateCartTable extends Migration
         Schema::create('cart', function (Blueprint $table) {
             $table->bigIncrements('id');
 
-            $table->integer('history_id')->unsigned();
+            $table->bigInteger('history_id')->unsigned();
             $table->foreign('history_id')
             ->references('id')->on('products_history')
             ->onDelete('cascade');
 
-            $table->integer('product_id');
+            $table->bigInteger('product_id')->unsigned();
             $table->foreign('product_id')
-                ->references('id')->on('products')->onDelete('cascade');
+                ->references('id')
+                ->on('products')
+                ->onDelete('cascade');
             
             $table->bigInteger('quantity');
             $table->decimal('cost', 8, 2);

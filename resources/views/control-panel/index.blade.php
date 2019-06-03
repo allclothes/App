@@ -32,22 +32,30 @@
                 			<tr>
                 				<td class="h">Nome</td>
                 				<td>{{auth::user()->name . ' ' .  auth::user()->lastname}}</td>
-                				<td><span class="edit">Editar</span></td>
+                				 <td>
+							<!--	<span class="edit">Editar</span>-->
+								</td> 
                 			</tr>
                 			<tr>
                 				<td class="h">Apelido</td>
                 				<td>{{auth::user()->username}}</td>
-                				<td><span class="edit">Editar</span></td>
+                				 <td>
+								<!--<span class="edit">Editar</span>-->
+								</td> 
                 			</tr>
                 			<tr>
                 				<td class="h">Data de nascimento:</td>
                 				<td>{{ auth::user()->birthday}}</td>
-                				<td><span class="edit">Editar</span></td>
+                				<td>
+								<!-- <span class="edit">Editar</span> -->
+								</td>
                 			</tr>
                 			<tr>
                 				<td class="h">E-mail</td>
                 				<td>{{auth::user()->email}}</td>
-                				<td><span class="edit">Editar</span></td>
+                				<td>
+								<!-- <span class="edit">Editar</span> -->
+								</td>
                 			</tr>
                 			<tr>
                 				<td class="h">Tipo de conta</td>

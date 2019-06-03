@@ -41,7 +41,7 @@
                             @foreach ($phistory as $ph)
                 			<tr data-toggle="modal" data-target="#openph-{{$ph->id}}">
                 				<td class="h">{{ \Carbon\Carbon::parse($ph->created_at)->diffForHumans() }}</td>
-                				<td>{{ getCartTotalCostByProductsHistoryId($ph->id)}}</td>
+                				<td>R$ {{ number_format(getCartTotalCostByProductsHistoryId($ph->id), 2, ',', '.') }}</td>
                 				<td>{{$ph->status}}</td>
                             </tr>
                             @endforeach

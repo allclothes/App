@@ -16,12 +16,12 @@ class CreateCommentsTable extends Migration
         Schema::create('comments', function (Blueprint $table) {
             $table->bigIncrements('id');
 
-            $table->integer('to_store_id')->unsigned();
+            $table->bigInteger('to_store_id')->unsigned();
             $table->foreign('to_store_id')
             ->references('id')->on('store')
             ->onDelete('cascade');
 
-            $table->integer('from_user_id')->unsigned();
+            $table->bigInteger('from_user_id')->unsigned();
             $table->foreign('from_user_id')
             ->references('id')->on('users')
             ->onDelete('cascade');

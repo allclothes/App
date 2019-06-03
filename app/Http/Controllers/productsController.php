@@ -28,6 +28,8 @@ class productsController extends Controller
      */
     public function index()
     {
+        if(!auth::check()) return redirect('/login')->with('error', 'Você não tem acesso a isto.');
+
         $getStore = DB::table('store')->where('user_id', auth::user()->id)->limit(1)->value('id');
         $products = DB::table('products')->where('store_id', $getStore)->paginate(12);
 
@@ -194,7 +196,7 @@ class productsController extends Controller
         }
         $request->session()->forget('carrinho');
 
-        return redirect('/control-panel/paymentHistory')->with('success', 'Compra realizada com sucesso! Uhuul');
+        return redirect('/control-panel/payments/history')->with('success', 'Compra realizada com sucesso! Uhuul');
        
     }
     /**
@@ -313,7 +315,7 @@ class productsController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(UpdateProductRequest $request, $id)
+    public function update(request $request, $id)
     {
         // if(isset($id) && auth::check() && isset($request)){
         //     $get = DB::table('products')->where('id', $id)->get();
@@ -342,11 +344,11 @@ class productsController extends Controller
         // }else{
         //     return redirect()->back()->with('error', 'Sem permissão para isto.');
         // }
-        $sid = Product::where('id', $id)->value('store_id');
-        $suid = db::table('store')->where('id', $sid)->value('user_id');
+        $sid = DB::table('products')->where('id', $request->id)->value('store_id');
+        $suid = DB::table('store')->where('id', $sid)->value('user_id');
         if(auth::check() && auth::user()->id == $suid){
         $p = Product::find($id);
-                    $validatedData = $request->validated();
+                    // $validatedData = $request->validated();
                     $cost = str_replace(',', '.', $request->cost);
                     $p->cost = $cost;
                     $p->amount = $request->amount;

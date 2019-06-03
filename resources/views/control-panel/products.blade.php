@@ -4,7 +4,6 @@
 <h3>Meus produtos</h3>
                 		<div>
                             @foreach ($products as $p)
-
                             <div class="card col-sm-4 col-md-3">                                   
                                 <h6 class="card-subtitle mb-2 text-muted">{{$p->name}}</h6>
                                 <img class="card-img-top" src="{{$p->images[0]}}" alt="Card image cap">
@@ -31,10 +30,12 @@
                                             <span aria-hidden="true">&times;</span>
                                           </button>
                                         </div>
-                                        <form action="{{route('product.edit', {{$p->id}})}}">
+                                        <form action="{{route('product.update')}}" method="POST">
                                             @csrf
+                                            {{ method_field('PUT') }}
                                         <div class="modal-body">
                                             <div class="row">
+                                            <input type="hidden" value="{{$p->id}}" name="id">
 
                                             <div class="form-group col-sm-6">
                                                 <label for="value">Preço</label>

@@ -158,21 +158,21 @@
                     <a class="dropdown-item" href="/{{auth::user()->storename}}">
                     <i class="fas fa-file-invoice-dollar"></i>
                   Minha página</a>
-          {{-- <a class="dropdown-item" href="/control-panel">
+           <a class="dropdown-item" href="/control-panel/product">
           <i class="fas fa-tachometer-alt"></i>
-        Resumo</a>
-          <a class="dropdown-item" href="/control-panel">
+        Meus produtos</a>
+         <a class="dropdown-item" href="/control-panel/product/create">
           <i class="fas fa-gamepad"></i>
-        Painel de controle</a>
-          <a class="dropdown-item" href="#">
+        Novo anuncio</a>
+        {{--  <a class="dropdown-item" href="#">
           <i class="fas fa-pencil-alt"></i>
         Payme Studio (Beta)</a> --}}
         @endif
           <div class="dropdown-divider" style="background-color:#000;"></div>
-          <a class="dropdown-item" href="#">
+          <!-- <a class="dropdown-item" href="#">
           <i class="fas fa-cog"></i>
           Configurações
-          </a>
+          </a> -->
           <a class="dropdown-item" href="{{ route('logout') }}"
           onclick="event.preventDefault();
                         document.getElementById('logout-form').submit();">

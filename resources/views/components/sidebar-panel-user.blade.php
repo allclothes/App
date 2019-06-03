@@ -95,12 +95,12 @@
                             </a>
                             <div class="sidebar-submenu">
                                 <ul>
-                                    <li>
+                                    <!-- <li>
                                         <a href="#">Regras de negócio</a>
                                     </li>
                                     <li>
                                         <a href="#">Informações</a>
-                                    </li>
+                                    </li> -->
                                     <li>
                                         <a href="/control-panel/store/create">Criar página</a>
                                     </li>

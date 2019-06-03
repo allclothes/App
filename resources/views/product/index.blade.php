@@ -48,6 +48,7 @@
                                             <div class="row">
 
                                                 <div class="form-group col-sm-6">
+                                                <input type="hidden" value="{{$p->id}}" name="id">
 
                                                     <label for="inlineFormInputGroupUsername2">Preço</label>
                                                     <div class="input-group mb-2 mr-sm-2">
